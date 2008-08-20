@@ -1,0 +1,627 @@
+<html>
+<head>
+<meta http-equiv="expires" content="Tue, 05 DEC 2000 07:00:00 GMT">
+<meta http-equiv="Pragma" content="no-cache">
+<script language="JavaScript" src="util/Photoshop_APIWrapper.js"></script>
+<script language="JavaScript">
+   
+   // Set some global variables
+   var set1Status = 0;
+   var set2Status = 0;
+   var set3Status = 0;
+
+   var exitPageStatus = false;
+   
+   var answer = new Array(-1,-1,-1,-99,-1,"",-1,-1,"");
+   var key = new Array(1,1,2,-99,1,"saturation",1,3,"skew");
+   
+   var _1 = "Pull down the Layer menu.";
+   var _2 = "Click on Color Balance.";
+   var _3 = "Adjust color levels by either using the slider bars or ";
+   _3 += "changing the numerical values.";
+   var _4 = "Point to New Adjustment Layer.";
+   var _5 = "Check the Preview check box.";
+
+   /**********************************************************************
+   **  Function: calcScore()
+   **  Description: This function is responsible for calculating the 
+   **               score and sucess_status of each objective.  3
+   **               questions grouped together equals one objective.
+   **               To satisfy the objective, 2 of the 3 questions must
+   **               be answered correctly.
+   **********************************************************************/
+   function calcScore()
+   {
+      // Disable the submit buttons so that it can not be clicked
+      document.examForm.submitButton.disabled = true;
+      
+      // Set the 1st objective
+      checkQ1();
+      checkQ2();
+      checkQ3();
+	   var indexOfFirstObjective = findObjective("obj_module_1");
+      if ( set1Status >= 2 )
+      {
+		 setObjToPassed(indexOfFirstObjective);
+      }
+      else
+      {
+		 setObjToFailed(indexOfFirstObjective);
+      }
+      
+      
+      // Set the 2nd objective
+      checkQ4();
+      checkQ5();
+      checkQ6();
+	  var indexOfSecondObjective = findObjective("obj_module_2");
+      if ( set2Status >= 2 )
+      {
+		 setObjToPassed(indexOfSecondObjective);
+      }
+      else
+      {
+		 setObjToFailed(indexOfSecondObjective);
+      }
+      
+      // Set the 3rd objective
+      checkQ7();
+      checkQ8();
+      checkQ9();
+	  var indexOfThirdObjective = findObjective("obj_module_3");
+      if ( set3Status >= 2 )
+      {
+		 setObjToPassed(indexOfThirdObjective);
+      }
+      else
+      {
+		 setObjToFailed(indexOfThirdObjective);
+      }
+      
+      //  Set the SCO to completed with a normal exit
+      doSetValue( "cmi.completion_status", "completed" );
+      doSetValue( "cmi.exit", "" );
+
+      //  Indicate that the SCO was finished normally
+      exitPageStatus = true;
+  
+      var result = doTerminate();
+   }
+   
+   function checkQ1()
+   {    
+      if (answer[0] == key[0])
+      {
+         set1Status++;
+      } 
+   }
+   
+   function checkQ2()
+   {
+      for (var i=0; i <= 2; i++)
+      {   
+         if (document.examForm.Q2[i].checked)
+         {
+            answer[1] = document.examForm.Q2[i].value;
+			   break;
+         }
+      }
+
+      if (answer[1] == key[1])
+      {
+         set1Status++;
+      }
+   }
+   
+   function checkQ3()
+   {
+      for (var i = 0; i <= 2; i++)
+      { 
+         if (document.examForm.Q3[i].checked)
+         {
+            answer[2] = document.examForm.Q3[i].value;
+            break;
+         }
+      }
+
+      if (answer[2] == key[2])
+      {
+         set1Status++;
+      }
+   }
+   
+   function checkQ4()
+   {
+      rawScore = 0;
+      
+      if ( document.examForm.Q4A.value == "1" && 
+           document.examForm.Q4B.value == "4" && 
+           document.examForm.Q4C.value == "2" && 
+           document.examForm.Q4D.value == "5" && 
+           document.examForm.Q4E.value == "3" )
+      {
+         set2Status++;
+		}
+   }
+   
+   function checkQ5()
+   {
+      for (var i = 0; i < 2; i++)
+      { 
+         if (document.examForm.Q5[i].checked)
+         {
+            answer[4] = document.examForm.Q5[i].value;
+            break;
+         }  
+      }
+
+      if (answer[4] == key[4])
+      {
+         set2Status++;
+      }
+   }
+   
+   function checkQ6()
+   {
+      answer[5] = document.examForm.Q6.value;
+      if ( answer[5] != "" && 
+           answer[5].toLowerCase() == key[5])
+      {
+         set2Status++;
+      }
+   }
+   
+   function checkQ7()
+   {
+      for (var i = 0; i <= 2; i++)
+      { 
+         if (document.examForm.Q7[i].checked)
+         {
+            answer[6] = document.examForm.Q7[i].value;
+            break;
+         }
+      }
+
+      if (answer[6] == key[6])
+      {
+         set3Status++;
+      }
+   }
+   
+   function checkQ8()
+   {
+      for (var i = 0; i <= 2; i++)
+      {  
+         if (document.examForm.Q8[i].checked)
+         {
+            answer[7] = document.examForm.Q8[i].value;
+            break;
+         }
+      }
+
+      if (answer[7] == key[7])
+      {
+         set3Status++;
+      }
+   }
+   
+   function checkQ9()
+   {
+      answer[8] = document.examForm.Q9.value;      
+      
+      if ( answer[8] != "" &&
+           answer[8].toLowerCase() == key[8] )
+      {
+         set3Status++;
+      }
+   }
+   
+   /**********************************************************************
+   **  Function: CheckText()
+   **  Description: This function is responsible setting the students
+   **               answer to the value of the radio button that they
+   **               selected in Question #1.  In addition, the text 
+   **               associated with the answer is displayed in the 
+   **               Answer1String text box.
+   **********************************************************************/ 
+   function CheckText() 
+   { 
+	   if (document.examForm.Q1[0].checked)
+	   { 
+	      document.examForm.Answer1String.value =  "Navigation" ;
+         answer[0] = 0;
+ 	   }
+	   else if (document.examForm.Q1[1].checked)
+	   {
+	      document.examForm.Answer1String.value =  "Enhancement";
+         answer[0] = 1;
+	   }
+	   else if (document.examForm.Q1[2].checked)
+	   {
+	      document.examForm.Answer1String.value =  "Vector";
+         answer[0] = 2;
+	   }
+   }
+   
+   /**********************************************************************
+   **  Function: reWrite()
+   **  Description: This function is responsible populating the text box
+   **               with the appropriate answer based on the number that
+   **               the user enters for question 4.
+   **********************************************************************/
+   function reWrite( formValue, formToPopulate )
+   {
+      if (formValue == "1" )
+      {
+         formToPopulate.value = _1;
+      }
+      else if (formValue == "2" )
+      {
+         formToPopulate.value = _2;
+      }
+      else if (formValue == "3" )
+      {
+         formToPopulate.value = _3;
+      }
+      else if (formValue == "4" )
+      {
+         formToPopulate.value = _4;
+      }
+      else if (formValue == "5" )
+      {
+         formToPopulate.value = _5;
+      }
+      else if (formValue == "")
+      {
+         formToPopulate.value = "";
+      }
+      else
+      {
+         formToPopulate.value = "";
+         msg = "You have entered an invalid value: [" + formValue + "]";
+         msg += "\nPlease enter a number value between 1 and 5";
+         alert(msg);
+      }
+   }
+   
+   /**********************************************************************
+   **  Function: loadPage()
+   **  Description: This is called when a SCO is first loaded in the
+   **               browser (onload()).  It finds the API if it was not
+   **               already located and calls Initialize().  In
+   **               the exitPageStatus global variable is set to false
+   **               indicating that the SCO is not yet finished.
+   **********************************************************************/
+   function loadPage()
+   {
+      var result = doInitialize();
+      exitPageStatus = false;
+      
+      // Get the header and subheader from the params
+      g_params = new Array(10);
+      get_params();
+      mainHeader = g_params["main"];
+      subHeader = g_params["sub"];
+
+      var msg = "<h1><b>" + mainHeader + "</b></h1>"
+      
+      if ( subHeader != null)
+      {
+         document.all.disp.innerHTML = msg + "<h2><i>" + subHeader + "</i></h2>";
+      }
+      else
+      {
+         document.all.disp.innerHTML = msg;
+      }
+   }
+   
+   /**********************************************************************
+   **  Function: doQuit()
+   **  Description: This function is called in the case that the user
+   **               does not finish the SCO "gracefully".  For example, 
+   **               the user may click the "continue" button before
+   **               submitting an answer to a question.  In this case,
+   **               this function is called as part of the page unloading.
+   **               This function ensures that Terminate() is called
+   **               and that the correct statuses are set even if the 
+   **               user closes the SCO window or navigates away before 
+   **               finishing the SCO.
+   **********************************************************************/
+   function doQuit()
+   {   
+      calcScore();
+   }
+
+   /**********************************************************************
+   **  Function: doQuit()
+   **  Description: This function is called in the case that the user
+   **               does not finish the SCO "gracefully".  For example, 
+   **               the user may click the "continue" button before
+   **               submitting an answer to a question.  In this case,
+   **               this function is called as part of the page unloading.
+   **               This function ensures that Terminate() is called
+   **               even if the user closes the SCO window or navigates
+   **               away before finishing the SCO.
+   **********************************************************************/
+   function unloadPage()
+   {
+    
+   	if (exitPageStatus != true)
+   	{
+   		doQuit();
+   	}
+   
+   	// NOTE: don't return anything that resembles a javascript
+   	//		   string from this function or IE will take the
+   	//		   liberty of displaying a confirm message box
+   }
+   
+   /**********************************************************************
+   **  Function: get_params()
+   **  Description: This function is used to get the parameters from the
+   **               query string
+   **********************************************************************/
+   function get_params()
+   {
+      var strSearch = window.location.search;
+      var idx = strSearch.indexOf('?');
+      if (idx != -1) 
+      {
+         var pairs = strSearch.substring(idx+1, strSearch.length).split('&');
+         for (var i=0; i<pairs.length; i++) 
+         {
+            nameVal = pairs[i].split('=');
+            g_params[nameVal[0]] = unescape(nameVal[1]);
+         }
+      }
+   }
+
+   /**********************************************************************
+    **  Function: findObjective()
+    **  Description: This function is used to find the approriate
+    **               objective (using the identifier).
+    **********************************************************************/
+   function findObjective(obj)
+   {
+	   var numOfObj = doGetValue("cmi.objectives._count");
+	   var objectiveLocation = -1;
+
+	   for ( var i=0; i < numOfObj; i++ ) 
+	   {
+          if ( doGetValue("cmi.objectives." + i + ".id") == obj )
+		  {
+			 objectiveLocation = i;
+			 break;
+		  }
+	   }
+      
+      if ( objectiveLocation == -1 ) 
+      {
+alert("objective not found");
+         objectiveLocation = numOfObj;
+alert("setting index " + numOfObj + " -- and id to " + obj);
+         doSetValue( "cmi.objectives." + objectiveLocation + ".id", obj);
+      }
+
+	   return objectiveLocation;
+   }
+
+   /**********************************************************************
+   **  Function: setObjToPassed()
+   **  Description: This function sets the objective at the given index
+   **               to passed
+   **********************************************************************/
+   function setObjToPassed(index)
+   {
+      doSetValue("cmi.objectives." + index + ".success_status",
+			  "passed");
+      doSetValue("cmi.objectives." + index + ".score.scaled",
+			  "1.0");
+   }
+
+   /**********************************************************************
+   **  Function: setObjToFailed()
+   **  Description: This function sets the objective at the given index
+   **               to failed
+   **********************************************************************/
+   function setObjToFailed(index)
+   {
+      doSetValue("cmi.objectives." + index + ".success_status",
+			   "failed");
+      doSetValue("cmi.objectives." + index + ".score.scaled",
+			  "0.0");
+   }
+</script>
+
+<title>Photoshop Exam</title>
+</head>
+<body onload="loadPage()" onunload="unloadPage()">
+
+   <div id="disp" name="disp"></div>   
+   <br>
+   <form name="examForm">
+  
+      <!-- ********************************************************
+      **   QUESTION 1
+      *************************************************************-->
+      The 
+      <input type="text" name="Answer1String" value="" size="12" 
+             readonly="true">
+      Tools allow you to clone portions of an image or blur backgrounds. 
+      <i>Fill in the blank by selecting the correct answer from the list 
+      below.</i> 
+      <p> 
+         <input type="Radio" name="Q1" value="0" onClick="CheckText()">
+         Navigation<br>
+         <input type="Radio" name="Q1" value="1" onClick="CheckText()">
+         <b><i> Enhancement<br></i></b>
+         <input type="Radio" name="Q1" value="2" onClick="CheckText()">
+         Vector
+      </p>
+      
+      <br /><hr /><br />
+      <!-- ********************************************************
+      **   QUESTION 2
+      *************************************************************-->
+      Which system allows you to reposition available palettes either 
+      individually or in groups? 
+      <ol>
+         <li> 
+            <input type="Radio" name="Q2" value="1">
+            <b><i>Floating Palette</i></b>
+         </li>
+         <li> 
+            <input type="Radio" name="Q2" value="2">
+            Cluster
+         </li> 
+         <li> 
+            <input type="Radio" name="Q2" value="3">
+            Windows<br>
+         </li>
+      </ol>
+      
+      <br /><hr /><br />
+      <!-- ********************************************************
+      **   QUESTION 3
+      *************************************************************-->
+      Which of the following symbols tells the user which layer is a active 
+      or editable? 
+      <ol>
+         <li> 
+            <input type="radio" name="Q3" value="1">
+            Eyeball
+         </li> 
+         <li> 
+            <input type="radio" name="Q3" value="2">
+            <b><i>Paint Brush</i></b>
+         </li>
+         <li> 
+            <input type="radio" name="Q3" value="3">
+            Chain Link<br>
+         </li>
+      </ol>  
+      
+      <br /><hr /><br />
+      <!-- ********************************************************
+      **   QUESTION 4
+      *************************************************************-->
+      How do you adjust the color balance of a photo? <i>Place the steps below 
+      in the correct order.</i> 
+      <p>
+         1.  Pull down the Layer menu.<br>
+         2.  Click on Color Balance.<br>
+         3.  Adjust color levels by either using the slider bars or changing 
+             the numerical values.<br>
+         4.  Point to New Adjustment Layer.<br>
+         5.  Check the Preview check box.
+      </p>
+      <p>
+      <input type="text" size="1" name="Q4A" value="" 
+       onKeyUp="reWrite(document.examForm.Q4A.value,document.examForm.Q4_Answer1)"> 
+      <input type="text" size="80" name="Q4_Answer1" value="" readonly><br>
+      
+      <input type="text"  size="1" name="Q4B" value="" 
+       onKeyUp="reWrite(document.examForm.Q4B.value,document.examForm.Q4_Answer2)">
+      <input type="text" size="80" name="Q4_Answer2" value="" readonly><br>
+      
+      <input type="text"  size="1" name="Q4C" value="" 
+       onKeyUp="reWrite(document.examForm.Q4C.value,document.examForm.Q4_Answer3)">
+      <input type="text" size="80" name="Q4_Answer3" value="" readonly><br>
+      
+      <input type="text" size="1" name="Q4D" value="" 
+       onKeyUp="reWrite(document.examForm.Q4D.value,document.examForm.Q4_Answer4)"> 
+      <input type="text" size="80" name="Q4_Answer4" value="" readonly><br>
+      
+      <input type="text"  size="1" name="Q4E" value="" 
+       onKeyUp="reWrite(document.examForm.Q4E.value,document.examForm.Q4_Answer5)"> 
+      <input type="text" size="80" name="Q4_Answer5" value="" readonly><br>
+      </p>
+      <p> Correct Sequence: <i><b>1, 4, 2, 5, 3</b></i> </p>
+	 
+      <br /><hr /><br />
+      <!-- ********************************************************
+      **   QUESTION 5
+      *************************************************************-->
+      <p>If an image is too light or too dark, you can use the brightness and 
+      contract controls to improve the picture?</p>
+      <ol>
+         <li><input type="Radio" name="Q5" value="1">
+            <b><i>True</i></b>
+         </li>
+         <li><input type="Radio" name="Q5" value="0">
+            False
+         </li>
+		</ol>
+      <p>    
+      
+      <br /><hr /><br />
+      <!-- ********************************************************
+      **   QUESTION 6
+      *************************************************************-->
+      <i>Input the correct answer.</i>
+      <br><br>
+      An image’s intensity of its colors is called 
+      <input type="text" size="10" name="Q6" value="" >. 
+      <br>
+      <p><b><i>saturation</i></b><p> 
+      
+      <br /><hr /><br />
+      <!-- ********************************************************
+      **   QUESTION 7
+      *************************************************************-->
+      Which tool(s) are used to select a specific regularly shaped area?
+      <ol>
+         <li> 
+            <input type="radio" name="Q7" value="1">
+            <b><i>Marquee Tools</i></b> 
+         </li>
+         <li> 
+            <input type="radio" name="Q7" value="2">
+            Lasso Tools
+         </li>
+         <li> 
+            <input type="radio" name="Q7" value="3">
+            Pointer Tool<br>
+         </li>
+      </ol>
+    
+	  <br /><hr /><br />
+      <!-- ********************************************************
+      **   QUESTION 8
+      *************************************************************-->
+      Which tools allows you to select areas of an image based on similar 
+      shades of color simply by clicking on the desired color? 
+      <ol>
+         <li> 
+            <input type="radio" name="Q8" value="1">
+            Marquee Tools 
+			</li>
+         <li> 
+            <input type="radio" name="Q8" value="2">
+            Pointer Tool
+         </li> 
+         <li> 
+            <input type="radio" name="Q8" value="3">
+            <b><i>Magic Wand Tools</i></b> <br>
+         </li>
+      </ol>
+
+	  <br /><hr /><br />
+      <!-- ********************************************************
+      **   QUESTION 9
+      *************************************************************-->
+      <i>Enter the correct answer.</i>
+      <br><br>
+      The transformation option that makes an image look like it is leaning is the
+      <input type="text" size="6" name="Q9" value="" >
+      option.
+      <br>
+      <p><b><i>skew</i></b></p>
+      
+	  <br /><hr /><br /><br />
+      <input type="button" value=" Submit  Answers " name="submitButton" onClick="calcScore()">
+   
+   </form>
+</body>
+
+</html>

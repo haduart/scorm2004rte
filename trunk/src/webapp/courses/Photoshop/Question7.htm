@@ -1,0 +1,209 @@
+<html>
+<head>
+<meta http-equiv="expires" content="Tue, 05 DEC 2000 07:00:00 GMT">
+<meta http-equiv="Pragma" content="no-cache">
+<script language=javascript src="util/Photoshop_APIWrapper.js"></script>
+<script language=javascript>
+
+   // Set some variables global to the SCO
+   var answer = -1;
+   var key = 1;
+   var rawScore = 0;
+   var exitPageStatus = false;
+
+   /**********************************************************************
+   **  Function: calcRawScore()
+   **  Description: This function is responsible for incrementing the raw
+   **               score (cmi.score.raw) if the question was 
+   **               answered correctly.  If not, it keeps the raw score
+   **               at its initial value (0).
+   **********************************************************************/
+   function calcRawScore()
+   {
+      answer = -1;
+      rawScore = 0;
+      
+      for (var i = 0; i <= 2; i++)
+      { 
+         if (document.examForm.Q1[i].checked)
+         {
+            answer = document.examForm.Q1[i].value;
+            break;
+         }
+      }
+
+      if (answer == key)
+      {
+         rawScore++;
+      } 
+   }
+
+   /**********************************************************************
+   **  Function: calcScore()
+   **  Description: This function is responsible for using the raw score
+   **               set in "calcRawScore()" to determine the status of 
+   **               the SCO.  The scaled score 
+   **               (cmi.score.scaled), Success Status
+   **               (cmi.success_status) and Completion Status
+   **               (cmi.completion_status) are set appropriately.
+   **               After each value is set, the SCO is finished with a
+   **               call to Terminate().
+   **********************************************************************/
+   function calcScore()
+   {
+      // Disable the submit buttons so that it can not be clicked
+      document.examForm.submitButton.disabled = true;
+      
+      // Get the raw score
+      calcRawScore();
+      
+      //  Set the scaled score that will be used in the 
+      //  Sequencing Tracking Model
+      doSetValue( "cmi.score.scaled", rawScore );
+      
+      //  Indicate whether or not the attempt on the SCO was
+      //  sucessful (passed or failed)
+      if ( rawScore != 1 )
+      {
+         doSetValue( "cmi.success_status", "failed" );
+      }
+      else 
+      {
+         doSetValue( "cmi.success_status", "passed" );
+      }
+   
+      //  Set the SCO to completed with a normal exit
+      doSetValue( "cmi.completion_status", "completed" );
+      doSetValue( "cmi.exit", "" );
+
+      //  Indicate that the SCO was finished normally
+      exitPageStatus = true;
+
+      var result = doTerminate();
+   }
+    
+   /**********************************************************************
+   **  Function: loadPage()
+   **  Description: This is called when a SCO is first loaded in the
+   **               browser (onload()).  It finds the API if it was not
+   **               already located and calls Initialize().  In
+   **               the exitPageStatus global variable is set to false
+   **               indicating that the SCO is not yet finished.
+   **********************************************************************/
+   function loadPage()
+   {
+      var result = doInitialize();
+      exitPageStatus = false;
+      
+      // Get the header and subheader from the params
+      g_params = new Array(10);
+      get_params();
+      mainHeader = g_params["main"];
+      subHeader = g_params["sub"];
+
+      var msg = "<h1><b>" + mainHeader + "</b></h1>"
+      
+      if ( subHeader != null)
+      {
+         document.all.disp.innerHTML = msg + "<h2><i>" + subHeader + "</i></h2>";
+      }
+      else
+      {
+         document.all.disp.innerHTML = msg;
+      }
+   }
+   
+   
+   /**********************************************************************
+   **  Function: doQuit()
+   **  Description: This function is called in the case that the user
+   **               does not finish the SCO "gracefully".  For example, 
+   **               the user may click the "continue" button before
+   **               submitting an answer to a question.  In this case,
+   **               this function is called as part of the page unloading.
+   **               This function ensures that Terminate() is called
+   **               and that the correct statuses are set even if the 
+   **               user closes the SCO window or navigates away before 
+   **               finishing the SCO.
+   **********************************************************************/
+   function doQuit()
+   {   
+      calcScore();
+   }
+
+   
+   /**********************************************************************
+   **  Function: doQuit()
+   **  Description: This function is called in the case that the user
+   **               does not finish the SCO "gracefully".  For example, 
+   **               the user may click the "continue" button before
+   **               submitting an answer to a question.  In this case,
+   **               this function is called as part of the page unloading.
+   **               This function ensures that Terminate() is called
+   **               even if the user closes the SCO window or navigates
+   **               away before finishing the SCO.
+   **********************************************************************/
+   function unloadPage()
+   {
+    
+   	if (exitPageStatus != true)
+   	{
+   		doQuit();
+   	}
+   
+   	// NOTE: don't return anything that resembles a javascript
+   	//		   string from this function or IE will take the
+   	//		   liberty of displaying a confirm message box
+   }
+   
+   /**********************************************************************
+   **  Function: get_params()
+   **  Description: This function is used to get the parameters from the
+   **               query string
+   **********************************************************************/
+   function get_params()
+   {
+      var strSearch = window.location.search;
+      var idx = strSearch.indexOf('?');
+      if (idx != -1) 
+      {
+         var pairs = strSearch.substring(idx+1, strSearch.length).split('&');
+         for (var i=0; i<pairs.length; i++) 
+         {
+            nameVal = pairs[i].split('=');
+            g_params[nameVal[0]] = unescape(nameVal[1]);
+         }
+      }
+   }
+
+</script>
+<title>Question</title>
+</head>
+
+<body onLoad="loadPage()" onunload="return unloadPage()">
+
+   <div id="disp" name="disp"></div>   
+  
+   <br>
+   <form name="examForm">
+      Which tool(s) are used to select a specific regularly shaped area?
+      <ol>
+         <li> 
+            <input type="radio" name="Q1" value="1">
+            <b><i>Marquee Tools</i></b> 
+         </li>
+         <li> 
+            <input type="radio" name="Q1" value="2">
+            Lasso Tools
+         </li>
+         <li> 
+            <input type="radio" name="Q1" value="3">
+            Pointer Tool<br>
+         </li>
+      </ol>
+      <input type="button" name="submitButton" value=" Submit Answer " 
+             onClick="calcScore()">
+   </form>
+</body>
+
+</html>

@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding = "ISO-8859-1" standalone="no" ?>
+<manifest identifier="photo-MANIFEST-linear" version="1.3"
+    xmlns="http://www.imsglobal.org/xsd/imscp_v1p1"
+    xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_v1p3"
+    xmlns:adlseq="http://www.adlnet.org/xsd/adlseq_v1p3"
+    xmlns:imsss="http://www.imsglobal.org/xsd/imsss"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd
+                        http://www.adlnet.org/xsd/adlcp_v1p3 adlcp_v1p3.xsd
+			http://www.imsglobal.org/xsd/imsss imsss_v1p0.xsd 
+		        http://www.adlnet.org/xsd/adlseq_v1p3 adlseq_v1p3.xsd" >
+   <metadata>
+      <schema>ADL SCORM</schema>
+      <schemaversion>CAM 1.3</schemaversion>
+   </metadata>                    
+                       
+   <organizations default="TOC1">
+      <organization identifier="TOC1">
+         <title>Photoshop Example -- Linear</title>
+         <item identifier="INTRO" identifierref="RESOURCE_INTRO">
+            <title>Introduction</title>
+	    <imsss:sequencing>
+		<imsss:sequencingRules>
+		<imsss:preConditionRule>
+               	   <imsss:ruleConditions conditionCombination = "all" >
+			   <imsss:ruleCondition operator="noOp" condition="attemptLimitExceeded"/>
+			   <imsss:ruleCondition operator="noOp" condition="attempted"/>
+               	   </imsss:ruleConditions>
+               	   <imsss:ruleAction action="hiddenFromChoice"/>
+	         </imsss:preConditionRule>
+		  <imsss:preConditionRule>
+               	   <imsss:ruleConditions conditionCombination = "all" >
+			   <imsss:ruleCondition operator="not" condition="completed"/>
+               	   </imsss:ruleConditions>
+               	   <imsss:ruleAction action="skip"/>
+	         </imsss:preConditionRule>
+		 </imsss:sequencingRules>	    
+               <imsss:limitConditions attemptLimit="2" attemptAbsoluteDurationLimit="PT10M"  />
+		<imsss:rollupRules rollupObjectiveSatisfied="false" objectiveMeasureWeight="0.0" >
+	               <imsss:rollupRule childActivitySet="all">
+	                  <imsss:rollupConditions>
+        	             <imsss:rollupCondition operator="noOp" condition="attempted"/>
+	                  </imsss:rollupConditions>
+          		  <imsss:rollupAction action="completed"/>
+		       </imsss:rollupRule>               
+	       	   </imsss:rollupRules>	       
+       	     </imsss:sequencing>
+
+         </item>
+         <item identifier="MODULE1">
+            <title>Module 1 -- Basics</title>
+            <item identifier="LESSON1" identifierref="RESOURCE_LESSON1">
+               <title>Lesson 1 -- Interface</title>
+            </item>
+            <item identifier="LESSON2" identifierref="RESOURCE_LESSON2">
+		<title>Lesson 2 -- Toolbox</title>
+
+	     <imsss:sequencing IDRef="SEQCOLLECT1">
+		<imsss:controlMode choice="true" flow="true"/>
+		<imsss:sequencingRules>
+		<imsss:preConditionRule>
+               	   <imsss:ruleConditions>
+               		<imsss:ruleCondition condition="attemptLimitExceeded"/>
+               	   </imsss:ruleConditions>
+               	   <imsss:ruleAction action="hiddenFromChoice"/>
+	         </imsss:preConditionRule>
+	 	</imsss:sequencingRules>
+               <imsss:limitConditions attemptLimit="2" attemptAbsoluteDurationLimit="PT1M"/>               
+       	     </imsss:sequencing>
+            </item>
+            <item identifier="LESSON3" identifierref="RESOURCE_LESSON3">
+               <title>Lesson 3 -- Palettes</title>
+            </item>
+            <item identifier="LESSON4" identifierref="RESOURCE_LESSON4">
+               <title>Lesson 4 -- Layers</title>
+            </item>
+            <imsss:sequencing>
+               <imsss:controlMode choice="true" flow="true"/>
+               <imsss:rollupRules rollupObjectiveSatisfied="false" rollupProgressCompletion="false" objectiveMeasureWeight="0.0"/>
+            </imsss:sequencing>
+         </item>
+         <item identifier="MODULE2">
+            <title>Module 2 -- Enhancing Images</title>
+            <item identifier="LESSON5" identifierref="RESOURCE_LESSON5">
+               <title>Lesson 5 -- Color Balance</title>
+            </item>
+            <item identifier="LESSON6" identifierref="RESOURCE_LESSON6">
+               <title>Lesson 6 -- Brightness and Contrast</title>
+            </item>
+            <item identifier="LESSON7" identifierref="RESOURCE_LESSON7">
+               <title>Lesson 7 -- Hue and Saturation</title>
+            </item>
+            <imsss:sequencing>
+               <imsss:controlMode choice="true" flow="true"/>
+		<imsss:sequencingRules>
+		<imsss:preConditionRule>
+               	   <imsss:ruleConditions>
+               		<imsss:ruleCondition condition="attemptLimitExceeded"/>
+               	   </imsss:ruleConditions>
+               	   <imsss:ruleAction action="hiddenFromChoice"/>
+	         </imsss:preConditionRule>
+	 	</imsss:sequencingRules>
+	       <imsss:limitConditions attemptLimit="2"/>
+	       <imsss:rollupRules rollupObjectiveSatisfied="false" rollupProgressCompletion="false" objectiveMeasureWeight="0.0"/>	       
+            </imsss:sequencing>
+         </item>
+         <item identifier="MODULE3">
+	    <title>Module 3 -- Blending Images</title>
+	    <item identifier="LESSON7B" identifierref="RESOURCE_LESSON7">
+		    <title>Lesson 7 -- A repetir altre cop</title>
+		    <imsss:sequencing>
+		    <imsss:rollupRules >
+	               <imsss:rollupRule childActivitySet="all">
+	                  <imsss:rollupConditions>
+        	             <imsss:rollupCondition condition="attempted"/>
+	                  </imsss:rollupConditions>
+          		  <imsss:rollupAction action="completed"/>
+		       </imsss:rollupRule>               
+	       	   </imsss:rollupRules>
+	          </imsss:sequencing>
+            </item>
+            <item identifier="LESSON8" identifierref="RESOURCE_LESSON8">
+		    <title>Lesson 8 -- Selection Tools</title>
+		    <imsss:sequencing>
+		    <!-- Interessant!! Primer aplica el rollup i
+			    després la post-Condició! -->
+	             <imsss:sequencingRules>
+			<imsss:preConditionRule>
+                  	   <imsss:ruleConditions>
+                     		<imsss:ruleCondition operator="not" condition="attempted"/>
+                  	   </imsss:ruleConditions>
+                  	   <imsss:ruleAction action="skip"/>
+	  		</imsss:preConditionRule>     
+			<imsss:postConditionRule>
+                  	   <imsss:ruleConditions>
+                     		<imsss:ruleCondition condition="completed"/>
+                  	   </imsss:ruleConditions>
+                  	   <imsss:ruleAction action="retryAll"/>
+	  		</imsss:postConditionRule>		   
+       	      	    </imsss:sequencingRules>
+		    <imsss:rollupRules >
+	               <imsss:rollupRule childActivitySet="all">
+	                  <imsss:rollupConditions>
+        	             <imsss:rollupCondition condition="attempted"/>
+	                  </imsss:rollupConditions>
+          		  <imsss:rollupAction action="completed"/>
+		       </imsss:rollupRule>               
+	       	    </imsss:rollupRules>		    
+	          </imsss:sequencing>
+            </item>
+            <item identifier="LESSON9" identifierref="RESOURCE_LESSON9">
+		    <title>Lesson 9 -- Transform</title>
+		    <imsss:sequencing>
+		    <imsss:rollupRules >
+	               <imsss:rollupRule childActivitySet="all">
+	                  <imsss:rollupConditions>
+        	             <imsss:rollupCondition condition="attempted"/>
+	                  </imsss:rollupConditions>
+          		  <imsss:rollupAction action="completed"/>
+		       </imsss:rollupRule>               
+	       	   </imsss:rollupRules>
+	          </imsss:sequencing>
+            </item>           
+	    <imsss:sequencing>
+               <imsss:controlMode choice="true" flow="true"/>
+		<!-- La condició hauria de funcionar amb 
+		"attempted" i sense necessitat de fer rollups
+		dintre dels assets... -->
+	       <imsss:sequencingRules>
+                <imsss:preConditionRule>
+                  <imsss:ruleConditions>
+                     <imsss:ruleCondition condition="completed"/>
+                  </imsss:ruleConditions>
+                  <imsss:ruleAction action="disabled"/>
+	  	</imsss:preConditionRule>
+		<imsss:preConditionRule>
+                  <imsss:ruleConditions>
+                     <imsss:ruleCondition condition="satisfied"/>
+                  </imsss:ruleConditions>
+                  <imsss:ruleAction action="hiddenFromChoice"/>
+                </imsss:preConditionRule>
+       	      </imsss:sequencingRules>
+
+	      <imsss:rollupRules rollupObjectiveSatisfied="true" objectiveMeasureWeight="1.0"/>
+	      	<!-- Acabar d'implementar i controlar! -->
+		<adlseq:rollupConsiderations  requiredForCompleted = "always" />
+	      
+               
+            </imsss:sequencing>
+
+	</item>
+	<item identifier="EXAMMENU">
+	      <title>Menu Examens</title>
+
+         <item identifier="EXAM">
+	    <title>Exam</title>
+	     <item identifier="EXAM1">
+                <title>Exam Part 1</title>
+
+           	 <item identifier="QUESTION1" identifierref="RESOURCE_QUESTION1" parameters="?main=Exam&amp;sub=Question%201" >
+			 <title>QUESTION 1</title>
+		<imsss:sequencing>
+                     <imsss:objectives>
+                        <imsss:primaryObjective objectiveID = "1LEAFOBJJ" satisfiedByMeasure = "true">
+			   <imsss:minNormalizedMeasure>0.7</imsss:minNormalizedMeasure>
+			   <imsss:mapInfo targetObjectiveID = "obj_map_1" readNormalizedMeasure = "false" readSatisfiedStatus="false" writeSatisfiedStatus = "true" writeNormalizedMeasure = "true"  />
+		   	</imsss:primaryObjective>
+			<imsss:objective objectiveID = "2LEAFOBJJ" satisfiedByMeasure = "true">
+                           <imsss:minNormalizedMeasure>0.6</imsss:minNormalizedMeasure>
+                        </imsss:objective>
+                     </imsss:objectives>
+                  </imsss:sequencing>
+           	 </item>
+           	 <item identifier="QUESTION2" identifierref="RESOURCE_QUESTION2" parameters="?main=Exam&amp;sub=Question%202">
+              		 <title>QUESTION 2</title>
+           	 </item>
+           	 <item identifier="QUESTION3" identifierref="RESOURCE_QUESTION3" parameters="?main=Exam&amp;sub=Question%203">
+              		 <title>QUESTION 3</title>
+            	</item>
+            	<item identifier="QUESTION4" identifierref="RESOURCE_QUESTION4" parameters="?main=Exam&amp;sub=Question%204">
+              		 <title>QUESTION 4</title>
+		 </item>
+		 <imsss:sequencing>
+	               <imsss:rollupRules rollupObjectiveSatisfied="false" rollupProgressCompletion="false" objectiveMeasureWeight="0.0"/>
+            	</imsss:sequencing>
+	     </item>
+
+	   <item identifier="EXAM2">
+                <title>Exam Part 2</title>
+
+            <item identifier="QUESTION5" identifierref="RESOURCE_QUESTION5" parameters="?main=Exam&amp;sub=Question%205">
+               <title>QUESTION 5</title>
+            </item>
+            <item identifier="QUESTION6" identifierref="RESOURCE_QUESTION6" parameters="?main=Exam&amp;sub=Question%206">
+               <title>QUESTION 6</title>
+            </item>
+            <item identifier="QUESTION7" identifierref="RESOURCE_QUESTION7" parameters="?main=Exam&amp;sub=Question%207">
+               <title>QUESTION 7</title>
+       	     </item>
+       	   </item>
+       	  <item identifier="EXAM3">
+                <title>Exam Part 3</title>
+
+            <item identifier="QUESTION8" identifierref="RESOURCE_QUESTION8" parameters="?main=Exam&amp;sub=Question%208">
+		<title>QUESTION 8</title>
+		 <imsss:sequencing>
+		 <imsss:sequencingRules>
+                  <imsss:preConditionRule>
+                   <imsss:ruleConditions>
+                     <imsss:ruleCondition condition="attempted"/>
+                   </imsss:ruleConditions>
+                   <imsss:ruleAction action="skip"/>
+                 </imsss:preConditionRule>
+	 	</imsss:sequencingRules>
+	   </imsss:sequencing>
+            </item>
+            <item identifier="QUESTION9" identifierref="RESOURCE_QUESTION9" parameters="?main=Exam&amp;sub=Question%209">
+		    <title>QUESTION 9</title>
+	   </item>
+	   <item identifier="QUESTION9A" identifierref="RESOURCE_QUESTION8" parameters="?main=Exam&amp;sub=Question%208">
+               <title>QUESTION 9A</title>
+       	    <imsss:sequencing>
+		<imsss:sequencingRules>
+                 <imsss:postConditionRule>
+                   <imsss:ruleConditions>
+                     <imsss:ruleCondition operator="not" condition="attempted"/>
+                   </imsss:ruleConditions>
+                   <imsss:ruleAction action="retry"/>
+                 </imsss:postConditionRule>
+	 	</imsss:sequencingRules>
+	   </imsss:sequencing>
+   	  </item>
+	  <item identifier="QUESTION9A2" identifierref="RESOURCE_QUESTION8" parameters="?main=Exam&amp;sub=Question%208">
+               <title>QUESTION 9A2</title>
+       	    <imsss:sequencing>
+		<imsss:sequencingRules>
+                 <imsss:postConditionRule>
+                   <imsss:ruleConditions>
+                     <imsss:ruleCondition condition="attempted"/>
+                   </imsss:ruleConditions>
+                   <imsss:ruleAction action="retry"/>
+                 </imsss:postConditionRule>
+	 	</imsss:sequencingRules>
+	   </imsss:sequencing>
+          </item>
+            <item identifier="QUESTION9B" identifierref="RESOURCE_QUESTION9" parameters="?main=Exam&amp;sub=Question%209">
+		    <title>QUESTION 9B</title>
+	  </item>
+	  
+            <imsss:sequencing>
+		<imsss:sequencingRules>
+                 <imsss:preConditionRule>
+                   <imsss:ruleConditions>
+                     <imsss:ruleCondition condition="satisfied"/>
+                   </imsss:ruleConditions>
+                   <imsss:ruleAction action="disabled"/>
+                 </imsss:preConditionRule>
+	 	</imsss:sequencingRules>
+	     	
+		<imsss:objectives>
+                  <imsss:primaryObjective objectiveID = "PRIMARYOBJ" satisfiedByMeasure="true">
+		     <imsss:minNormalizedMeasure>0.5</imsss:minNormalizedMeasure>
+		     <imsss:mapInfo targetObjectiveID = "obj_map_1" readNormalizedMeasure = "true" readSatisfiedStatus="true" writeSatisfiedStatus = "false" writeNormalizedMeasure = "false"  />
+
+	  	 </imsss:primaryObjective>
+		 <imsss:objective objectiveID = "SECONDARYOBJ" satisfiedByMeasure="true">
+		  <imsss:minNormalizedMeasure>0.5</imsss:minNormalizedMeasure>
+                  </imsss:objective>
+	  	</imsss:objectives>
+
+	    </imsss:sequencing>
+
+       	  </item>
+      </item>
+
+            <imsss:sequencing>
+		<imsss:controlMode choice="true" flow="true"/>
+
+		<imsss:sequencingRules>
+                 <imsss:preConditionRule>
+                   <imsss:ruleConditions>
+                     <imsss:ruleCondition condition="satisfied"/>
+                   </imsss:ruleConditions>
+                   <imsss:ruleAction action="disabled"/>
+                 </imsss:preConditionRule>
+                </imsss:sequencingRules>
+
+		<!--
+   	     <imsss:rollupRules >
+                  <imsss:rollupRule childActivitySet="all">
+                     <imsss:rollupConditions>
+                        <imsss:rollupCondition condition="attempted"/>
+                     </imsss:rollupConditions>
+                     <imsss:rollupAction action="completed"/>
+                  </imsss:rollupRule>
+               </imsss:rollupRules>
+	       -->
+	        
+	       <imsss:objectives>
+                  <imsss:primaryObjective objectiveID = "PRIMARYOBJ" satisfiedByMeasure="true">
+                     <imsss:minNormalizedMeasure>0.6</imsss:minNormalizedMeasure>
+                  </imsss:primaryObjective>
+               </imsss:objectives>
+            </imsss:sequencing>
+       </item>
+         <imsss:sequencing>
+            <imsss:controlMode choice="true" flow="true"/>
+            <imsss:sequencingRules>
+               <imsss:exitConditionRule>
+                  <imsss:ruleConditions>
+                     <imsss:ruleCondition condition="completed"/>
+                  </imsss:ruleConditions>
+                  <imsss:ruleAction action="exit"/>
+               </imsss:exitConditionRule>
+       	    </imsss:sequencingRules>
+		
+	    <imsss:limitConditions attemptLimit="50" attemptAbsoluteDurationLimit="PT30M"  />
+            <imsss:rollupRules >
+               <imsss:rollupRule childActivitySet="all">
+                  <imsss:rollupConditions>
+                     <imsss:rollupCondition condition="satisfied"/>
+                  </imsss:rollupConditions>
+                  <imsss:rollupAction action="satisfied"/>
+               </imsss:rollupRule>
+               <imsss:rollupRule childActivitySet="any">
+                  <imsss:rollupConditions conditionCombination="any">
+			  <imsss:rollupCondition operator ="not" condition="satisfied"/>
+			  <imsss:rollupCondition operator ="not" condition="completed"/>
+                  </imsss:rollupConditions>
+                  <imsss:rollupAction action="notSatisfied"/>
+               </imsss:rollupRule>
+            </imsss:rollupRules>
+         </imsss:sequencing>
+      </organization>
+   </organizations>
+   <resources>
+      <resource identifier="RESOURCE_INTRO" adlcp:scormType="asset" type="webcontent" href="intro.htm">
+         <file href="intro.htm" />
+         <file href="images/headerside.gif" />
+         <file href="images/headertop.gif" />
+         <file href="images/pssidebar.gif" />
+      </resource>
+      <resource identifier="RESOURCE_LESSON1" adlcp:scormType="asset" type="webcontent" href="Lesson1.htm">
+         <file href="Lesson1.htm" />
+         <file href="images/EndOfLesson.gif" />
+         <file href="images/LessonTitle1.gif" />
+         <file href="images/headerside.gif" />
+         <file href="images/headertop.gif" />
+         <file href="images/interfacesmall.jpg" />
+         <file href="images/pssidebar.gif" />
+      </resource>
+      <resource identifier="RESOURCE_LESSON2" adlcp:scormType="asset" type="webcontent" href="Lesson2.htm">
+         <file href="Lesson2.htm" />
+         <file href="images/EndOfLesson.gif" />
+         <file href="images/HandTool.gif" />
+         <file href="images/LessonTitle2.gif" />
+         <file href="images/ZoomToolIcon.gif" />
+         <file href="images/box.gif" />
+         <file href="images/colorselect.gif" />
+         <file href="images/enhancementtools.gif" />
+         <file href="images/eyedroppertool.gif" />
+         <file href="images/headerside.gif" />
+         <file href="images/headertop.gif" />
+         <file href="images/navagationtools.gif" />
+         <file href="images/objecttools.gif" />
+         <file href="images/pssidebar.gif" />
+         <file href="images/selectiontools.gif" />
+         <file href="images/toolbox.gif" />
+      </resource>
+      <resource identifier="RESOURCE_LESSON3" adlcp:scormType="asset" type="webcontent" href="Lesson3.htm">
+         <file href="Lesson3.htm" />
+         <file href="images/EndOfLesson.gif" />
+         <file href="images/LessonTitle3.gif" />
+         <file href="images/defaultpalettes.gif" />
+         <file href="images/headerside.gif" />
+         <file href="images/headertop.gif" />
+         <file href="images/pssidebar.gif" />
+      </resource>
+      <resource identifier="RESOURCE_LESSON4" adlcp:scormType="asset" type="webcontent" href="Lesson4.htm">
+         <file href="Lesson4.htm" />
+         <file href="images/37.gif" />
+         <file href="images/EndOfLesson.gif" />
+         <file href="images/LessonTitle4.gif" />
+         <file href="images/eyeicon.gif" />
+         <file href="images/flatlayers.gif" />
+         <file href="images/headerside.gif" />
+         <file href="images/headertop.gif" />
+         <file href="images/layerarrows.gif" />
+         <file href="images/layers.gif" />
+         <file href="images/linkicon.gif" />
+         <file href="images/newlayericon.gif" />
+         <file href="images/paintbrush.gif" />
+         <file href="images/pssidebar.gif" />
+      </resource>
+      <resource identifier="RESOURCE_LESSON5" adlcp:scormType="asset" type="webcontent" href="Lesson5.htm">
+         <file href="Lesson5.htm" />
+         <file href="images/EndOfLesson.gif" />
+         <file href="images/LessonTitle5.gif" />
+         <file href="images/Tree-and-DragonsGreen.jpg" />
+         <file href="images/Tree-and-Dragonsnot-Green.jpg" />
+         <file href="images/box.gif" />
+         <file href="images/colorbalancebox.gif" />
+         <file href="images/colorbalancemenu2.gif" />
+         <file href="images/headerside.gif" />
+         <file href="images/headertop.gif" />
+         <file href="images/pssidebar.gif" />
+      </resource>
+      <resource identifier="RESOURCE_LESSON6" adlcp:scormType="asset" type="webcontent" href="Lesson6.htm">
+         <file href="Lesson6.htm" />
+         <file href="images/EndOfLesson.gif" />
+         <file href="images/Jar-GateDark.jpg" />
+         <file href="images/Jar-GateLight.jpg" />
+         <file href="images/LessonTitle6.gif" />
+         <file href="images/box.gif" />
+         <file href="images/brightnesscontrastbox.gif" />
+         <file href="images/brightnesscontrastmenu.gif" />
+         <file href="images/headerside.gif" />
+         <file href="images/headertop.gif" />
+         <file href="images/pssidebar.gif" />
+      </resource>
+      <resource identifier="RESOURCE_LESSON7" adlcp:scormType="asset" type="webcontent" href="Lesson7.htm">
+         <file href="Lesson7.htm" />
+         <file href="images/Circular-GateDark.jpg" />
+         <file href="images/Circular-GateLight.jpg" />
+         <file href="images/EndOfLesson.gif" />
+         <file href="images/LessonTitle7.gif" />
+         <file href="images/box.gif" />
+         <file href="images/headerside.gif" />
+         <file href="images/headertop.gif" />
+         <file href="images/huesaturationbox.gif" />
+         <file href="images/huesaturationmenu.gif" />
+         <file href="images/pssidebar.gif" />
+      </resource>
+      <resource identifier="RESOURCE_LESSON8" adlcp:scormType="asset" type="webcontent" href="Lesson8.htm">
+         <file href="Lesson8.htm" />
+         <file href="images/Addition.gif" />
+         <file href="images/EndOfLesson.gif" />
+         <file href="images/IntersectionIcon.gif" />
+         <file href="images/LessonTitle8.gif" />
+         <file href="images/MagicWandBar.gif" />
+         <file href="images/MagicWandIcon.gif" />
+         <file href="images/Selection.gif" />
+         <file href="images/SubtractionIcon.gif" />
+         <file href="images/addtosubtractfromselection.gif" />
+         <file href="images/dafbackground.jpg" />
+         <file href="images/dafmagicselect.jpg" />
+         <file href="images/headerside.gif" />
+         <file href="images/headertop.gif" />
+         <file href="images/lassotools.gif" />
+         <file href="images/marqueetools.gif" />
+         <file href="images/originaldaf.jpg" />
+         <file href="images/pssidebar.gif" />
+         <file href="images/selectiontools.gif" />
+         <file href="images/singledafselection.jpg" />
+      </resource>
+      <resource identifier="RESOURCE_LESSON9" adlcp:scormType="asset" type="webcontent" href="Lesson9.htm">
+         <file href="Lesson9.htm" />
+         <file href="images/EndOfLesson.gif" />
+         <file href="images/LessonTitle9.gif" />
+         <file href="images/TransformFlyout.gif" />
+         <file href="images/birdfeeder.jpg" />
+         <file href="images/birdfeederdistort.gif" />
+         <file href="images/birdfeederflip.gif" />
+         <file href="images/birdfeederperspective.gif" />
+         <file href="images/birdfeederrotated.jpg" />
+         <file href="images/birdfeederscaled.jpg" />
+         <file href="images/birdfeederskewed.gif" />
+         <file href="images/box-distort.gif" />
+         <file href="images/box-flip.gif" />
+         <file href="images/box-perspective.gif" />
+         <file href="images/box-rotate.gif" />
+         <file href="images/box-scale.gif" />
+         <file href="images/box-skew.gif" />
+         <file href="images/box.gif" />
+         <file href="images/headerside.gif" />
+         <file href="images/headertop.gif" />
+         <file href="images/pssidebar.gif" />
+         <file href="images/transformCheck.gif" />
+         <file href="images/transformX.gif" />
+      </resource>
+      <resource identifier="RESOURCE_QUESTION1" adlcp:scormType="sco" type="webcontent" href="Question1.htm">
+         <file href="Question1.htm" />
+         <file href="util/Photoshop_APIWrapper.js" />
+      </resource>
+      <resource identifier="RESOURCE_QUESTION2" adlcp:scormType="sco" type="webcontent" href="Question2.htm">
+         <file href="Question2.htm" />
+         <file href="util/Photoshop_APIWrapper.js" />
+      </resource>
+      <resource identifier="RESOURCE_QUESTION3" adlcp:scormType="sco" type="webcontent" href="Question3.htm">
+         <file href="Question3.htm" />
+         <file href="util/Photoshop_APIWrapper.js" />
+      </resource>
+      <resource identifier="RESOURCE_QUESTION4" adlcp:scormType="sco" type="webcontent" href="Question4.htm">
+         <file href="Question4.htm" />
+         <file href="util/Photoshop_APIWrapper.js" />
+      </resource>
+      <resource identifier="RESOURCE_QUESTION5" adlcp:scormType="sco" type="webcontent" href="Question5.htm">
+         <file href="Question5.htm" />
+         <file href="util/Photoshop_APIWrapper.js" />
+      </resource>
+      <resource identifier="RESOURCE_QUESTION6" adlcp:scormType="sco" type="webcontent" href="Question6.htm">
+         <file href="Question6.htm" />
+         <file href="util/Photoshop_APIWrapper.js" />
+      </resource>
+      <resource identifier="RESOURCE_QUESTION7" adlcp:scormType="sco" type="webcontent" href="Question7.htm">
+         <file href="Question7.htm" />
+         <file href="util/Photoshop_APIWrapper.js" />
+      </resource>
+      <resource identifier="RESOURCE_QUESTION8" adlcp:scormType="sco" type="webcontent" href="Question8.htm">
+         <file href="Question8.htm" />
+         <file href="util/Photoshop_APIWrapper.js" />
+      </resource>
+      <resource identifier="RESOURCE_QUESTION9" adlcp:scormType="sco" type="webcontent" href="Question9.htm">
+         <file href="Question9.htm" />
+         <file href="util/Photoshop_APIWrapper.js" />
+      </resource>
+   </resources>
+   <imsss:sequencingCollection>
+	   <imsss:sequencing ID = "SEQCOLLECT1">
+	      <imsss:controlMode choice="false" flow="true"/>
+	      <imsss:limitConditions attemptLimit="5" attemptAbsoluteDurationLimit="PT5M"/>
+	      <imsss:rollupRules >
+	          <imsss:rollupRule childActivitySet="all">
+	              <imsss:rollupConditions>
+        	        <imsss:rollupCondition condition="attempted"/>
+	              </imsss:rollupConditions>
+          	      <imsss:rollupAction action="completed"/>
+	      </imsss:rollupRule> 
+	    </imsss:rollupRules>
+	</imsss:sequencing>
+   </imsss:sequencingCollection>
+</manifest>

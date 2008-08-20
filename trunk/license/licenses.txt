@@ -1,0 +1,19 @@
+****************************************
+*        Third Party Licenses          *
+****************************************
+
+----------------------------------------
+|        MySQL Connector/J 5.1         |
+----------------------------------------
+mysql-connector-java-5.1.5-bin.jar
+
+LICENSE: General Public License (GPL) v2.0
+FILE: gpl.txt
+
+
+-----------------------------------------
+|          vdhtmlxTree v.1.5            |
+-----------------------------------------
+
+LICENSE: General Public License (GPL) v2.0
+FILE: gpl.txt
