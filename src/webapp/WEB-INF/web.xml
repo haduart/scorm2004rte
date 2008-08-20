@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<!-- Location within the Web Application for a small image -->
+	<icon>
+		<small-icon>favicon.ico</small-icon>
+	</icon>
+	<!-- Declarative data of servlet -->
+	<!-- Mappings between a servlet and a URL pattern --> 
+	<!-- Session parameters for this Web Application -->
+	<session-config>
+		<session-timeout>-2</session-timeout>
+	</session-config>
+	<!-- Web Application display name -->
+	<display-name>scorm2004rte_M21</display-name>
+	<!-- File name to use as a default welcome file -->
+	<welcome-file-list>
+		<welcome-file>/welcome.jsp</welcome-file>
+	</welcome-file-list>
+	<!-- Mapping between an error code or exception type 
+	to the path of a resource in the Web Application -->
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+</web-app>

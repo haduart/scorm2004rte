@@ -1,0 +1,726 @@
+/* propietats generals del cos del document html */ 
+body {
+	font-family: 'Trebuchet MS', Verdana, sans-serif;
+	font-size: .8em;
+	margin: 0 .5em 0 1em;
+	padding: 0;
+	width: 100%;
+}
+
+/* amaga l'element */
+.hide {
+	visibility: hidden;
+	display: none;
+}
+
+/* contenidor de totes les capes */
+/* es divideix principalment en cinc capes: accessibility, header, siteNav, contentPage, footer */
+#container {
+}
+
+/* propietats dels estils de la capçalera de la pàgina */
+/* conté les capes: hLogo, hPageNav */
+#header {
+	border-bottom: 2px solid #0248e0;
+	padding-bottom: 15px;
+	margin: 1em 0 0 0;
+	height: 100%;
+	width: 98%;
+	overflow: hidden;
+	clear: both;
+}
+
+/* propietats dels estils del logotip de la capçalera */
+#hLogo {
+	width: auto;
+	float: left;
+}
+
+/* propietats de l'espai de navegació de la pàgina en la capçalera */
+#hPageNav {
+	text-align: right;
+	padding-right: 10px;
+	vertical-align: top;
+	margin: 1em 0 2em 0;
+	float: right;
+}
+
+/* propietats de les imatges de l'espai de navegació */
+#hPageNav img {
+	margin-top: 0;
+	border: 0;
+}
+
+/* propietats dels links de l'espai de navegació */
+#hPageNav a, #hPageNav a:visited {
+	color: #0248e0;
+	margin-top: 0;
+}
+
+/* propietats dels links de l'espai de navegació */
+#hPageNav a:hover {
+	color: #0248e0;
+	text-decoration: none;
+}
+
+/* propietats dels estils del menú de navegació */
+#siteNav {
+	width: 98%;
+	background: #09c;
+	margin: 0;	
+	border-bottom: 2px solid #0248e0;
+	clear: both;
+}
+
+/* propietats de la llista d'elements del menú de navegació */
+#siteLinkList {
+	line-height: 2em;
+	list-style: none;
+	font-size: 1em;
+	margin: 0;	
+	padding: 4px 0;
+	width: auto;
+}
+
+#siteLinkList li {
+	display: inline;
+	line-height: 2em;
+}
+
+#siteLinkList .selected a,
+	#siteLinkList .selected a:link,
+	#siteLinkList .selected a:visited,
+	#siteLinkList .selected a:hover {
+	color: #000000;
+	cursor: default;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#siteLinkList a, 
+	#siteLinkList a:link, 
+	#siteLinkList a:visited {
+	color: #ffffff;
+	padding: 2px 15px 2px 10px;
+	text-decoration: underline;
+	border-right: 1px solid #ffffff;
+}
+
+#siteLinkList a:hover {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+/* propietats dels estils del contingut de la pàgina: menú d'eines, contingut i botons */
+/* conté les capes: pContent, pToolsMenu, pButtons */
+#pageContent {
+	margin: 1em 0;
+	padding-top: 10px;
+	width: 98%;
+	border-bottom: 2px solid #0248e0;
+	clear: both;
+}
+
+/* propietats del cos del contingut */
+/* conté les capes: contentTitle, contentBody */
+#pContent {
+	margin-top: .5em;
+	margin-left: 11em;
+	padding-right: .5em;
+}
+
+/* propietats de l'espai del títol del contingut */
+#contentTitle {	
+	width: 100%;
+	height: 100%;
+	border-bottom: 2px solid #0248e0;
+	overflow: hidden;
+}
+
+/* propietats del títol */
+#contentTitle .title {
+	padding: 2px 4px 6px 0;
+	height: 1em;
+	float: left;
+	color: #000000;
+	font-size: 1em;
+}
+
+#contentTitle .title h2 {
+	display: inline;
+	margin: 0 0 0 .2em;
+	padding: 0;
+	color: #555555;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+/* propietats de la icona ajuda */
+#contentTitle .help {
+	padding: 2px 4px 6px 2px;
+	text-align: right;
+	vertical-align: middle;
+}
+
+#contentTitle .help img {
+	margin: 0;
+	border: none;
+	vertical-align: text-bottom;
+	width: 16px;
+	cursor: help;
+}
+
+#contentTitle .contentButtons {
+	padding: 2px 4px 6px 2px;
+	text-align: right;
+	vertical-align: middle;
+}
+
+#contentTitle .contentButtons img {
+	margin: 0 .2em;
+	border: none;
+	vertical-align: text-bottom;
+}
+
+#contentTitle .contentButtons a {
+	text-decoration: none;
+}
+
+/* propietats del cos del contingut on hi haurà la capa "iframe" */
+#contentBody {
+	width: 98%;
+	height: 100%;
+	color: #555555;
+}
+
+/* propietats del contingut de la capa que fa d'"iframe" */
+#contentIframe {
+	font-family: verdana,sans-serif,arial;
+	/*font-size: .9em;*/
+	text-align: left;
+	background: #ffffff;
+	margin-top: 0;
+	margin-bottom: .5em;
+	margin-left: 0;
+	margin-right: 0;
+	padding: 10px 4px 4px 4px;
+	height: 350px;
+	width: 100%;
+	border: none;
+	overflow: auto;
+}
+
+/* propietats del menú d'eines */
+/* conté les capes: menuLogo, menuContent */
+#pToolsMenu {
+	color: #000000;
+	border-right: 2px solid #fff;
+	text-align: right;
+	padding: 0 .5em 0 0;
+	width: 9.6em;
+	float: left;
+
+}
+
+#pToolsMenu:hover {
+	border-right: 2px solid #0248e0;
+}
+
+/* propietats de l'espai del menú d'eines */
+#menuContent {
+	color: #000;
+	padding: 0;
+	margin: 1em 0 0 0;
+	/*width: 9.6em;*/
+	background: inherit;
+}
+
+/* propietats de la llista d'eines */
+#menuContent ul {
+	list-style: none;
+	margin: 0;
+	padding-right: 0;
+	padding-left: 0;
+	width: auto;
+}
+
+#menuContent li {
+	border: 1px solid #fff;
+	text-align: right;
+	margin: 0;
+	padding: 0;
+	width: auto;
+}
+
+#menuContent li a:link, #menuContent li a {
+	display: block;
+	text-decoration: underline;
+	color: #0248e0;
+	padding: 2px 0px 2px 4px;
+
+}
+
+#menuContent li a:hover {
+	text-decoration: none;
+	color: #0248e0;
+}
+
+#menuContent li a.selected {
+	font-style: italic;
+	text-decoration: none;
+	color: #555555;
+	cursor: default;
+}
+
+#menuContent li a.selected:hover {
+	text-decoration: none;
+	color: #555555;
+	cursor: default;
+}
+
+/* propietats del títol del menú d'eines */
+#menuLogo {
+	width: 9.7em;
+	height: auto;
+	overflow: hidden;
+	display: block;
+}
+
+#menuLogo img {
+	margin: .5em auto;
+	display: block;
+}
+
+/* propietats de l'espai de botons del cos de la pàgina */
+/* conté les capes: buttonsContent */
+#pButtons {
+	margin-top: 15px;
+	margin-bottom: 15px;
+	text-align: center;
+}
+
+#buttonsContent {	
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+/* propietats del formulari dels botons */
+.buttonsForm {
+	margin: 1em 0;
+}
+
+.buttonsForm .field {
+	border: 1px solid #aaa;
+	padding: 3px;
+	margin-left: .5em;
+	width: 7em;
+}
+
+.buttonsForm .button {
+	margin: 3px 3px 0 3px;
+	cursor: pointer;
+}
+
+.buttonsForm .button:hover {
+	color: #09c;
+}
+
+.buttonsForm .label {
+	color: #000;
+	padding: 0 .5em
+}
+
+/* propietats dels estils del peu de la pàgina */
+/* conté les capes: fInfo */
+#footer {
+	color: #000000;
+	font-size: x-small;
+	margin: 0;
+	padding: 0;
+	top: 0;
+	width: 98%;
+	text-align: center;
+	clear: both;
+}
+
+#fInfo {
+	font-size: xx-small;
+	text-align: center;
+	padding-bottom: 1em;
+	margin-top: .5em;
+	margin-bottom: .5em;
+	color: #0248e0;
+	clear: both;
+}
+
+/* propietats dels estils de la taula del seguiment */
+table.tracking {
+	font-size: 1em;
+	color: #555555;
+	border-collapse: collapse;
+	width: 98%;
+}
+
+table.tracking caption {
+	margin: 0 0 0 0;
+	padding: 0 0 .5em 0;
+	font-weight: bold;
+	font-size: 1.1em;
+	text-align: left;
+}
+
+table.tracking tr {
+}
+
+table.tracking tr:hover {
+	background-color: #e0e0e0;
+}
+
+table.tracking th {
+	background-color: #d2d1d1;
+	padding: 0.5em 1em 0.5em 1.5em;
+	text-align: left;
+	vertical-align: top;
+}
+
+table.tracking td {
+	border-bottom: 1px solid #bbbbbb;
+	border-top: 1px solid #eeeeee;
+	padding: 0.2em 1em 0.2em 1.5em;
+	text-align: left;
+	vertical-align: top;
+}
+
+table.tracking a, a:link {
+	text-decoration: underline;
+	color: #0248e0;
+}
+
+table.tracking a:hover {
+	text-decoration: none;
+	color: #0248e0;
+}
+
+table.tracking .mintext {
+	font-size: 0.90em;
+}
+
+table.tracking .italic {
+	font-style: italic;
+}
+
+/* SECTION 3 - TABULAR DATA LAYOUTS*/
+/*itemSummary: table for displaying the details of an item - layout is th-td, th-td*/
+/*see an announcement*/
+/* propietats dels estils de les taules per als formularis */
+table.forms {
+	color: #555555;
+	margin: .5em 0;
+	font-size: .9em;
+}
+
+/*format the th - since jsf cannot do <th> vertically in a column,
+ certain tds are classed (header) in jsf based tools to render the same as the th*/
+table.forms th {
+	font-weight: bold;
+	/*font-family: Arial, Helvetica, sans-serif;*/
+	white-space: nowrap;
+	vertical-align: top;
+	text-align: left;
+	padding: .3em 1.5em 1.3em .3em;
+}
+
+table.forms td {
+	text-align: left;
+	padding: .3em 1em;
+	vertical-align: top;
+}
+
+table.forms caption {
+	text-align: left;
+	font-weight: bold;
+	padding: 1em 0 0 0;
+}
+
+/* propietats de l'arbre de navegació */
+#pNavTree {
+	color: #000;
+	border-right: 2px solid #fff;
+	text-align: right;
+	padding: 0 .5em 0 0;
+	width: 18%; /*18.8em;*/
+	float: left;
+}
+
+#pNavTree:hover {
+	border-right: 2px solid #0248e0;
+}
+
+/* propietats de l'espai de 'arbre de navegació */
+#treeContent {
+	color: #000;
+	padding: 0;
+	margin: 1em 0 0 0;
+	/*width: 9.6em;*/
+	background: inherit;
+}
+
+/* propietats del contenidor de l'arbre de navegació */
+#treeContainer {
+	text-align: left;
+	border: 0px; 
+	height: 520px;
+	overflow: auto;	
+}
+
+/************ 
+* TEMPORAL *
+************/
+#adlTitle {	
+	width: 90%;
+	height: 100%;
+	border-bottom: 2px solid #0248e0;
+	overflow: hidden;
+}
+
+#adlTitle .title {
+	padding: 2px 4px 6px 0;
+	height: 1em;
+	float: left;
+	color: #000000;
+	font-size: 1em;
+}
+
+#adlTitle .title h2 {
+	display: inline;
+	margin: 0 0 0 .2em;
+	padding: 0;
+	color: #555555;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+#adlTitle .help {
+	padding: 2px 4px 6px 2px;
+	text-align: right;
+	vertical-align: middle;
+}
+
+#adlTitle .help img {
+	margin: 0;
+	border: none;
+	vertical-align: text-bottom;
+	width: 16px;
+	cursor: help;
+}
+
+#adlTitle .contentButtons {
+	padding: 2px 4px 6px 2px;
+	text-align: right;
+	vertical-align: middle;
+}
+
+#adlTitle .contentButtons img {
+	margin: 0 .2em;
+	border: none;
+	vertical-align: text-bottom;
+}
+
+#adlTitle .contentButtons a {
+	text-decoration: none;
+}
+
+#adlBody {
+	width: 90%;
+	height: 100%;
+	color: #555555;
+	overflow: hidden;
+}
+
+#adlIframe {
+	/*font-family: Verdana, sans-serif, Arial;
+	font-size: .9em;
+	text-align: left;
+	background: #ffffff;*/
+	margin-top: 0;
+	margin-bottom: .5em;
+	margin-left: 0;
+	margin-right: 0;
+/*	padding: 10px 4px 4px 4px;*/
+	height: 450px;
+	width: 99%;
+	border: none; /*1px dashed silver;*/
+	overflow: auto;
+}
+
+
+#courseForm  fieldset {
+	border: 2px dashed gray;
+	padding: 8px;
+}
+
+#courseForm  fieldset #fields #comment {
+	font-weight: bold;
+	text-align: right;
+	margin-top: -12px;
+	margin-bottom: 10px;
+}
+
+#courseForm  fieldset legend {
+	font-size: 1.2em;
+	border: 2px dashed gray;
+	padding: 6px;
+}
+
+#courseForm  fieldset #fields label {
+	font-weight: bold;
+	width: 15em;
+	float: left; 
+}
+
+#courseForm  fieldset #fields input, textarea, select {
+	font-family: Verdana, sans-serif;
+	font-size: 1em;
+	color: #555555;
+}
+
+#courseForm  fieldset #fields textarea {
+	width: 350px;
+	height: 100px;
+	margin-bottom: 10px;	
+}
+
+#courseForm  fieldset #fields input {
+	width: 350px;
+	margin-bottom: 10px;	
+}
+
+#courseForm  fieldset #fields select {
+	font-family: Verdana, sans-serif;
+	font-size: 1em;
+}
+
+#courseForm  fieldset #fields #timeField {
+	font-family: Verdana, sans-serif;
+	font-size: 1em;
+	margin-bottom: 10px;
+}
+
+.readonlyField {
+	border-top: none;
+	border-bottom: thin dotted gray;
+	border-left: none;
+	border-right: none;
+}
+
+.writeField {
+	border: thin dotted gray;
+	background-color: #eaebeb;
+}
+
+.helpBody {
+	font-family: 'Trebuchet MS', Verdana, sans-serif;
+	font-size: .8em;
+	color: #000000;
+	margin: 0em;
+	padding: 0;
+	overflow: visible;
+}
+
+#helpContainer {
+	margin: 1em;
+	overflow: hidden;
+}
+
+#helpHeader {
+	font-family: 'Trebuchet MS', Verdana, sans-serif;
+	font-size: 1.8em;
+	font-weight: bold;
+	text-align: left;
+	background-color: #0099FF;
+	vertical-align: middle;
+	color: #000000;
+	padding: .5em;
+	margin: 0;
+	width: 100%;
+	float: left;
+}
+
+#helpContent {
+	font-family: 'Trebuchet MS', Verdana, sans-serif;
+	text-align: left;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	float: left;
+}
+
+#helpContentDescription {
+	padding: 1.5em 1em 1.5em 1em;
+	border-bottom: 2px solid #0248e0;
+}
+
+#helpContent img {
+/*	border: 1px;
+	margin: 1em;
+	border-style: dotted; 
+*/
+}
+
+#helpContent .title {
+	margin: 1em 0 0 0;
+	color: #555555;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+#helpContent .content {
+	margin: 1.6em 0 1em 0;
+	line-height: 1.5em;
+}
+
+#helpContent .bold {
+	font-weight: bold;
+}
+
+#helpContent .italic {
+	font-style: italic;
+}
+
+#helpContent a:link, a:visited {
+	color: #717171;
+	text-decoration: none;
+	font-style: italic;
+}
+
+#helpContent a:hover {
+	color: #0099FF;
+	text-decoration: none;
+	font-style: italic;
+}
+
+#helpContent ul {
+	list-style: square;
+	line-height: 1.5em;
+	margin-bottom: 0;
+}
+
+#helpContent ol {
+	list-style-type: decimal;
+	line-height: 1.5em;
+	margin-bottom: 0;
+}
+
+#helpContent li {
+	
+}
+
+#helpButton {
+	text-align: center;
+	vertical-align: middle;
+	padding: .5em 0 0 0;
+	margin: 0;
+	width: 100%;
+	float: left;
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="scormrte">
+        <wb-resource deploy-path="/" source-path="/src/webapp"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/edu.url.lasalle.campus.scorm2004rte.server"/>
+        <property name="java-output-path" value="build/classes"/>
+        <property name="context-root" value="scorm2004rte_md21"/>
+    </wb-module>
+</project-modules>

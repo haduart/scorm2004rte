@@ -1,0 +1,309 @@
+<html>
+<head>
+   <meta http-equiv="expires" content="Tue, 05 DEC 2000 07:00:00 GMT">
+   <meta http-equiv="Pragma" content="no-cache">
+   <script language="JavaScript" src="util/Photoshop_APIWrapper.js"></script>
+   <script language="JavaScript">
+
+   var obj1_scaledScore;
+   var obj2_scaledScore;
+   var obj3_scaledScore;
+   
+   /**********************************************************************
+    **  Function: findObjective()
+    **  Description: This function is used to find the approriate
+    **               objective (using the identifier).
+    **********************************************************************/
+   function findObjective(obj)
+   {
+	   var numOfObj = doGetValue("cmi.objectives._count");
+	   var objectiveLocation = -1;
+
+	   for ( var i=0; i < numOfObj; i++ ) 
+	   {
+          if ( doGetValue("cmi.objectives." + i + ".id") == obj )
+		  {
+			 objectiveLocation = i;
+			 break;
+		  }
+	   }
+       if ( objectiveLocation == -1 ) 
+       {
+          objectiveLocation = numOfObj;
+          doSetValue( "cmi.objectives." + objectiveLocation + ".id", obj);
+       }
+
+	   return objectiveLocation;
+   }
+   
+   
+   /**********************************************************************
+   **  Function: stripDecimal( tempVal )
+   **  Description: This function is used to write the percent score and
+   **               status bar for each module
+   **********************************************************************/
+   function stripDecimal( ioPercent )
+   {
+      var stringIoPercent = String( ioPercent); 
+      var decimalIndex = stringIoPercent.indexOf(".");
+      
+      var returnVal;
+      
+      if ( ! (decimalIndex == -1) )
+      {
+         
+         returnVal = stringIoPercent.substring(0,decimalIndex);
+      } 
+      else
+      {
+        returnVal = stringIoPercent;
+      }
+      
+      return returnVal;
+   }
+   
+   
+   /**********************************************************************
+   **  Function: getObjectivesStatus()
+   **  Description: This function is used to find the approriate
+   **               objective (using the identifier).
+   **********************************************************************/
+   function getObjectivesStatus()
+   {
+      var tempIndex = findObjective("obj_module_1");
+      var tempObjScore = "cmi.objectives." + tempIndex + ".score.scaled";
+      obj1_scaledScore = doGetValue(tempObjScore);
+      if ( obj1_scaledScore == null)
+      {
+         obj1_scaledScore = 0;
+      }
+      
+      tempIndex = findObjective("obj_module_2");
+      tempObjScore = "cmi.objectives." + tempIndex + ".score.scaled";
+      obj2_scaledScore = doGetValue(tempObjScore);
+      if ( obj2_scaledScore == null)
+      {
+         obj2_scaledScore = 0;
+      }
+   
+      tempIndex = findObjective("obj_module_3");
+      tempObjScore = "cmi.objectives." + tempIndex + ".score.scaled";
+      obj3_scaledScore = doGetValue(tempObjScore);
+      if ( obj3_scaledScore == null)
+      {
+         obj3_scaledScore = 0;
+      }
+   }
+   
+   /**********************************************************************
+   **  Function: writeObjectivesStatus()
+   **  Description: This function is used to write the percent score and
+   **               status bar for each module
+   **********************************************************************/
+   function writeObjectivesStatus()
+   {  
+      var tempVal = obj1_scaledScore * 100;
+      tempVal = stripDecimal(tempVal);
+      document.all.obj1_info.innerHTML = tempVal + "%";
+      var msg = "";
+      for( i=0; i < 100; i=i+5 )
+      {
+         if ( i < tempVal )
+         {
+            msg += "<img src='images/gbar.gif' />"
+         }
+         else
+         {
+            msg += "<img src='images/bbar.gif' />"
+         }
+      }
+      document.all.obj1_statusBar.innerHTML = msg;
+      
+      
+      tempVal = obj2_scaledScore * 100;
+      tempVal = stripDecimal(tempVal);
+      document.all.obj2_info.innerHTML = tempVal + "%";
+      msg = "";
+      for( i=0; i < 100; i=i+5 )
+      {
+         if ( i < tempVal )
+         {
+            msg += "<img src='images/gbar.gif' />"
+         }
+         else
+         {
+            msg += "<img src='images/bbar.gif' />"
+         }
+      }
+      document.all.obj2_statusBar.innerHTML = msg;
+      
+      tempVal = obj3_scaledScore * 100;
+      tempVal = stripDecimal(tempVal);
+      document.all.obj3_info.innerHTML = tempVal + "%";
+      msg = "";
+      for( i=0; i < 100; i=i+5 )
+      {
+         if ( i < tempVal )
+         {
+            msg += "<img src='images/gbar.gif' />"
+         }
+         else
+         {
+            msg += "<img src='images/bbar.gif' />"
+         }
+      }
+      document.all.obj3_statusBar.innerHTML = msg;
+
+   }
+     
+   /**********************************************************************
+   **  Function: unloadPage()
+   **  Description: This function is called in the case that the user
+   **               does not finish the SCO "gracefully".  For example, 
+   **               the user may click the "continue" button before
+   **               submitting an answer to a question.  In this case,
+   **               this function is called as part of the page unloading.
+   **               This function ensures that Terminate() is called
+   **               even if the user closes the SCO window or navigates
+   **               away before finishing the SCO.
+   **********************************************************************/
+   function unloadPage()
+   {
+    
+   	if (exitPageStatus != true)
+   	{
+   		doQuit();
+   	}
+   
+   	// NOTE: don't return anything that resembles a javascript
+   	//		   string from this function or IE will take the
+   	//		   liberty of displaying a confirm message box
+   }
+   
+   /**********************************************************************
+   **  Function: loadPage()
+   **  Description: This is called when a SCO is first loaded in the
+   **               browser (onload()).  It finds the API if it was not
+   **               already located and calls Initialize().  In
+   **               the exitPageStatus global variable is set to false
+   **               indicating that the SCO is not yet finished.
+   **********************************************************************/
+   function loadPage()
+   {
+      var result = doInitialize();
+      exitPageStatus = false;
+      
+      getObjectivesStatus();
+      writeObjectivesStatus();
+      
+   }
+   
+   /**********************************************************************
+   **  Function: doQuit()
+   **  Description: This function is called in the case that the user
+   **               does not finish the SCO "gracefully".  For example, 
+   **               the user may click the "continue" button before
+   **               submitting an answer to a question.  In this case,
+   **               this function is called as part of the page unloading.
+   **               This function ensures that Terminate() is called
+   **               and that the correct statuses are set even if the 
+   **               user closes the SCO window or navigates away before 
+   **               finishing the SCO.
+   **********************************************************************/
+   function doQuit()
+   {   
+      //  Set the SCO to completed with a normal exit
+      doSetValue( "cmi.completion_status", "completed" );
+      doSetValue( "cmi.exit", "" );
+
+      //  Indicate that the SCO was finished normally
+      exitPageStatus = true;
+
+      var result = doTerminate();
+   }
+
+   </script>
+     
+   <title>Photoshop Course Summary</title>
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000" link="#000000" vlink="#000000" alink="#000000" onLoad="loadPage()" onunload="return unloadPage()">
+
+<table width=564 border=0 cellpadding=0 cellspacing=0>
+   <tr valign="absbottom" align="left"> 
+      <td colspan="2"> <img src="images/headertop.gif" hspace="0" vspace="0" width="659" height="53" align="absbottom"></td>
+   </tr>
+   <tr> 
+      <td valign="top" align="left" width="103">
+         <img src="images/headerside.gif" hspace="0" vspace="0" width="96" height="153" align="top" border="0"><img src="images/pssidebar.gif" width="72" height="504"> 
+      </td>
+      <td align="right" valign="top" width="568">
+         <table width="550" border="0" height="1557">
+            <tr> 
+               <td rowspan="6" valign="top" align="left" width="1">&nbsp;</td>
+               <td colspan="2" valign="top" align="left"> 
+               <div align="center"><img src="images/summary.gif" width="325" height="50"></div>
+               
+               <br /><br />
+               <p align="center">
+                  Thank You for completing the Photoshop Course.
+               </p>
+               
+               <br /><br />
+               <p align="center">
+               <table>
+                     <tr>
+                        <td>
+                           <p><b>Objective #1 &nbsp;&nbsp;&nbsp;</b></p>
+                        </td>
+                        <td>
+                           <b><div id="obj1_info" name="obj1_info"></div></b>
+                        </td>   
+                     </tr>
+                     <tr>
+                        <td colspan="2">
+                           <div id="obj1_statusBar" name="obj1_statusBar"></div>
+                        </td>
+                     </tr>
+                     <tr>
+                       <td colspan="2">&nbsp;</td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <p><b>Objective #2 &nbsp;&nbsp;&nbsp;</b></p>
+                        </td>
+                        <td>
+                           <b><div id="obj2_info" name="obj2_info"></div></b>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td colspan="2">
+                           <div id="obj2_statusBar" name="obj2_statusBar"></div>
+                        </td>
+                     </tr>
+                     <tr>
+                       <td colspan="2">&nbsp;</td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <p><b>Objective #3 &nbsp;&nbsp;&nbsp;</b></p>
+                        </td>
+                        <td>
+                           <b><div id="obj3_info" name="obj3_info"></div></b>            
+                        </td>
+                     </tr>
+                     <tr>
+                        <td colspan="2">
+                           <div id="obj3_statusBar" name="obj3_statusBar"></div>
+                        </td>
+                     </tr>
+                  </table> 
+                  </p>
+               </td>   
+            </tr>
+         </table>
+      </td>
+   </tr>
+</table>
+       
