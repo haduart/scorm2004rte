@@ -33,6 +33,7 @@
 <jsp:useBean id="init" class="edu.url.lasalle.campus.scorm2004rte.system.Initialization" scope="page" />
 <% init.setTranslations("error.userNotHaveAdministrationPermission,error.userNotAuthenticated,createcourse.title,createcourse.noscript,createcourse.accessibility.bar.title,createcourse.accessibility.bar.link1,createcourse.accessibility.bar.link2,createcourse.accessibility.bar.link3,createcourse.accessibility.bar.link4,createcourse.header.logo,createcourse.accessibility.navigationmenu,createcourse.navigationmenu.link1,createcourse.navigationmenu.link2,createcourse.accessibility.toolmenu,createcourse.toolmenu.title,createcourse.toolmenu.link1,createcourse.toolmenu.link2,createcourse.toolmenu.link3,createcourse.accessibility.content,createcourse.content.title,createcourse.content.help,createcourse.content.obligatoryField,createcourse.content.form.emptyField,createcourse.content.form.nonValidFile,createcourse.content.form.legend1,createcourse.content.form.legend2,createcourse.content.form.package,createcourse.content.form.importButton,createcourse.content.form.id,createcourse.content.form.vesion,createcourse.content.form.title,createcourse.content.form.description,createcourse.content.form.requirements,createcourse.content.form.directedTo,createcourse.content.form.educative,createcourse.content.form.author,createcourse.content.form.copyright,createcourse.content.form.duration,createcourse.content.form.yes,createcourse.content.form.no,createcourse.content.form.activateTracking,createcourse.content.form.january,createcourse.content.form.february,createcourse.content.form.march,createcourse.content.form.april,createcourse.content.form.may,createcourse.content.form.june,createcourse.content.form.july,createcourse.content.form.august,createcourse.content.form.september,createcourse.content.form.october,createcourse.content.form.november,createcourse.content.form.december,createcourse.content.form.timeStart,createcourse.content.form.timeFinish,createcourse.content.button,createcourse.accessibility.button,createcourse.footer.message"); %>
 <c:set var="translator" value="<%= init.getTranslations() %>" />
+<jsp:useBean id="utils" class="edu.url.lasalle.campus.scorm2004rte.system.JSPUtils" scope="page" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
@@ -164,12 +165,8 @@
 						</form>
 					</c:when>
 					<c:when test="${param.page eq 2}">
-						<jsp:useBean id="utils" class="edu.url.lasalle.campus.scorm2004rte.system.JSPUtils" scope="page" />
-						<% String courseId = utils.importCourse(request); %>
-						<%= courseId %>
-						<c:choose>
-							<c:when test="${courseId ne ''}">
-							
+						<% utils.importCourse(request); %>
+														
 						<script type="text/javascript">
 						<!--										
 							/*
@@ -199,39 +196,39 @@
 									</div>
 									<div>
 										<label><c:out value='${translator["createcourse.content.form.id"]}' /></label>
-										<input type="text" name="id" readonly value="<%= utils.getCourseManifestId(courseId) %>" class="readonlyField" />
+										<input type="text" name="id" readonly value="<%= utils.getCourseManifestIdFORM() %>" class="readonlyField" />
 									</div>
 									<div>
 										<label><c:out value='${translator["createcourse.content.form.title"]}' /></label>
-										<input type="text" name="title" value="<%= utils.getCourseTitle(courseId) %>" class="writeField" />
+										<input type="text" name="title" value="<%= utils.getCourseTitleFORM() %>" class="writeField" />
 									</div>
 									<div>
 										<label><c:out value='${translator["createcourse.content.form.description"]}' /></label>
-										<textarea name="description" value="<%= utils.getCourseDescription(courseId) %>" class="writeField"></textarea>
+										<textarea name="description" value="<%= utils.getCourseDescriptionFORM() %>" class="writeField"></textarea>
 									</div>
 									<div>
 										<label><c:out value='${translator["createcourse.content.form.requirements"]}' /></label>
-										<textarea name="requeriments" value="<%= utils.getCourseRequirement(courseId) %>" class="writeField"></textarea>
+										<textarea name="requirements" value="<%= utils.getCourseRequirementFORM() %>" class="writeField"></textarea>
 									</div>
 									<div>
 										<label><c:out value='${translator["createcourse.content.form.directedTo"]}' /></label>
-										<input type="text" name="directed" readonly value="<%= utils.getCourseEndUserRole(courseId) %>" class="readonlyField" />
+										<input type="text" name="directed" readonly value="<%= utils.getCourseEndUserRoleFORM() %>" class="readonlyField" />
 									</div>
 									<div>
 										<label><c:out value='${translator["createcourse.content.form.educative"]}' /></label>
-										<input type="text" name="educative" readonly value="<%= utils.getCourseEducationalContext(courseId) %>" class="readonlyField" />
+										<input type="text" name="educative" readonly value="<%= utils.getCourseEducationalContextFORM() %>" class="readonlyField" />
 									</div>
 									<div>
 										<label><c:out value='${translator["createcourse.content.form.author"]}' /></label>
-										<input type="text" name="author" readonly value="<%= utils.getCourseAuthor(courseId) %>" class="readonlyField" />
+										<input type="text" name="author" readonly value="<%= utils.getCourseAuthorFORM() %>" class="readonlyField" />
 									</div>
 									<div>
 										<label><c:out value='${translator["createcourse.content.form.copyright"]}' /></label>
-										<input type="text" name="copyright" readonly value="<%= utils.getCourseCopyright(courseId) %>" class="readonlyField" />
+										<input type="text" name="copyright" readonly value="<%= utils.getCourseCopyrightFORM() %>" class="readonlyField" />
 									</div>
 									<div>
 										<label><c:out value='${translator["createcourse.content.form.duration"]}' /></label>
-										<input type="text" name="duration" readonly value="<%= utils.getCourseTypicalLearningTime(courseId) %>" class="readonlyField" />
+										<input type="text" name="duration" readonly value="<%= utils.getCourseTypicalLearningTimeFORM() %>" class="readonlyField" />
 									</div>
 									<div>
 										<label><c:out value='${translator["createcourse.content.form.timeStart"]}' /></label>
@@ -451,15 +448,7 @@
 										</select>
 									</div>
 								</div>
-							</fieldset>
-							</c:when>
-							<c:otherwise>
-								ERROR DESPRES D'INVOCAR "importCourse" DE "JSPUtils.java"!!! 
-								COURSEID = '-1'
-							</c:otherwise>
-						</c:choose>
-
-						
+							</fieldset>						
 					</c:when>
 					
 				</c:choose>
@@ -479,6 +468,9 @@
 						</form>
 				</div>
 				</c:when>
+				<c:when test="${param.page eq 3}">
+						S'HA CREAT EL CURS CORRECTAMENT??? <%= utils.createCourse(request) %>
+					</c:when>
 			</c:choose>
 				
 			</div>
@@ -502,4 +494,4 @@
 			<p><c:out value='${translator["createcourse.noscript"]}' /></p>	
 		</noscript>
 	</body>
-</html>		
+</html>				
