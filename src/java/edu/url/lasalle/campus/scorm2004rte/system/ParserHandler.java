@@ -284,7 +284,9 @@ public class ParserHandler { //implements DataAccess { //, Serializable{
 							nouGestor.insertOrganizations(
 							scormID, "", true, 
 							novaOrganitzacio.getIdentifier(), 
-							novaOrganitzacio.getTitle()));
+							novaOrganitzacio.getTitle(),
+							newMetadata.dateTimeStart,
+							newMetadata.dateTimeEnd));
 					
 					if (organitzacioID.get(contador) == 0) {
 						if (Constants.DEBUG_ERRORS) {

@@ -116,24 +116,67 @@ public class JSPUtils {
      * @return
      */
     public final boolean createCourse(final HttpServletRequest request) {
-        
-        System.out.println("Title: " + request.getParameter("title"));
-        System.out.println("Description: " + request.getParameter("description"));
-        System.out.println("Requirements: " + request.getParameter("requirements"));
-        
-        System.out.println("Inici: " + request.getParameter("timeStartDay") + "/" 
-                + request.getParameter("timeStartMonth") + "/" + request.getParameter("timeStartYear")
-                + " - " + request.getParameter("timeStartHour") + ":" + request.getParameter("timeStartMinute"));
-        
-        System.out.println("Fi: " + request.getParameter("timeFinishDay") + "/" 
-                + request.getParameter("timeFinishMonth") + "/" + request.getParameter("timeFinishYear")
-                + " - " + request.getParameter("timeFinishHour") + ":" + request.getParameter("timeFinishMinute"));
-        
-        System.out.println("Tracking???: " + request.getParameter("tracking"));
+    	DOMParser nouParser = new DOMParser(
+    			request.getParameter("path") + "imsmanifest.xml");
+    	
+    	metadata = nouParser.getMetadataInformation();
+    	
+        if (metadata != null) {
+        	System.out.println("Title: " + request.getParameter("title"));
+        	metadata.title = request.getParameter("title");
+        	
+            System.out.println("Description: " + request.getParameter("description"));
+            metadata.description = request.getParameter("description"); 
+            
+            System.out.println("Requirements: " + request.getParameter("requirements"));
+            metadata.requirement = request.getParameter("requirements"); 
+            
+            System.out.println("Inici: " + request.getParameter("timeStartDay") + "/" 
+                    + request.getParameter("timeStartMonth") + "/" + request.getParameter("timeStartYear")
+                    + " - " + request.getParameter("timeStartHour") + ":" + request.getParameter("timeStartMinute"));
+            metadata.dateTimeStart = 
+            	request.getParameter("timeStartYear") + "-"
+            	+ request.getParameter("timeStartMonth") + "-"
+	            + request.getParameter("timeStartDay") + " "
+	            + request.getParameter("timeStartHour") + ":"
+	            + request.getParameter("timeStartMinute") + ":00";
+	            
+            
+            System.out.println("Fi: " + request.getParameter("timeFinishDay") + "/" 
+                    + request.getParameter("timeFinishMonth") + "/" + request.getParameter("timeFinishYear")
+                    + " - " + request.getParameter("timeFinishHour") + ":" + request.getParameter("timeFinishMinute"));
+            metadata.dateTimeEnd = 
+            	request.getParameter("timeFinishYear") + "-"
+            	+ request.getParameter("timeFinishMonth") + "-"
+	            + request.getParameter("timeFinishDay") + " "
+	            + request.getParameter("timeFinishHour") + ":"
+	            + request.getParameter("timeFinishMinute") + ":00";
+            
+            System.out.println("Tracking???: " + request.getParameter("tracking"));
+            
+            System.out.println("coursePath: " + request.getParameter("path"));
+            
+            ParserHandler nouHandler = new ParserHandler(
+            		metadata,
+            		request.getParameter("path") + "imsmanifest.xml",
+    				(new Random()).nextInt(100) + metadata.title);
+            
+            System.out.println("CORRECTE!!!!!!!!!!");
+            
+        } else {
+        	System.out.println("[ERROR] No tenim cap metadata en memòria?");
+        }
+    	
         
         return true;
     }
-    
+    /**
+     * coursePath.
+     * @return String
+     */
+    public final String getCoursePath() {
+    	return coursePath;
+    }
     /**
      * Carrega els fitxers ZIPs enviats pel formulari de "createCourse.jsp" 
      * al servidor. 

@@ -27,20 +27,31 @@ USE scorm2004BETA;
 
   DROP TABLE IF EXISTS `studentsClass`;
   CREATE TABLE `studentsClass` (
-	`student_id`	int(11) UNSIGNED NOT NULL,	#identificador de l'usuari
+	`student_id`	int(11) UNSIGNED NOT NULL AUTO_INCREMENT,	#identificador de l'usuari
 	`organization_id`	int(11) UNSIGNED NOT NULL,	#identificador del curs	(de l'organització)
 
-	`global_student_id`	int(11) UNSIGNED NOT NULL,	#l'identificador de l'expedient?
+	`global_student_id`	VARCHAR(100) NOT NULL,	#l'identificador de l'expedient?
 	`satisfied`	BIT(1) default 0,		#potser ja està satisfeta
 	`completed`	BIT(1) default 0,		#per saber si està completat
-	`progress_measure`	DECIMAL(5,3) default 0.0,	#per saber la nota
+	`progress_measure`	DECIMAL(5,3) default 0.0,	#per saber la nota (en %!)
 	`visits`	integer default 0,
-	`progression_status` DECIMAL(5,3) default 0.0,
-	PRIMARY KEY (student_id)
+	`last_Access` TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`last_item_title` VARCHAR(30) NOT NULL, 
+	`completed_percent`	DECIMAL(5,3) default 0.0,
+	PRIMARY KEY (student_id, organization_id)
   ) ENGINE = MyISAM;
 
-  DROP TABLE IF EXISTS `scormStudent_1`; 	#La sintaxis seria `scormStudent_$scorm_id`
-  CREATE TABLE `scormStudent_1` (
+  DROP TABLE IF EXISTS `permission`;
+  CREATE TABLE `permission` (
+	`scorm_id`	int(11) UNSIGNED NOT NULL,	#identificador del curs	(de l'scorm)
+	`student_id`	int(11) UNSIGNED NOT NULL,	#identificador de l'usuari
+	`typeOfPermis`	enum('LECTURA','ADMINISTRACIO') NOT NULL default 'LECTURA',
+	PRIMARY KEY (scorm_id, student_id)
+  ) ENGINE = MyISAM;  
+
+
+  DROP TABLE IF EXISTS `courseStudent_1`; 	#La sintaxis seria `scormStudent_$scorm_id`
+  CREATE TABLE `courseStudent_1` (
 	`student_id`	int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`scorm_structure`	BLOB,	#100 ks com a maxim? Aquí és on es guardarà l'objecte serialitzat amb l'estructura de l'estudiant.
 	PRIMARY KEY (student_id)
@@ -60,6 +71,7 @@ USE scorm2004BETA;
 	`structure`		VARCHAR(200),		#Descriu l'estructura de l'organització	
 	`scorm_id`		int(11) NOT NULL,	#Identificador del paquet scorm amb el que està associat
 	`organization_item`	int(11) NOT NULL,	#Aquest serà l'item que representarà la nostra organització. 
+	`studentTable`		VARCHAR(50) NOT NULL,
 	`activate_sequencing` 	BIT(1) default 1, 	#Yes = 1, False = 0 #Indicador per activar o desactivar el seqüenciament del paquet.
 	`import_date` 		TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, # timestamp automàtic de l'hora de l'importació	
 	`beginning_date`	datetime,	#Data i hora en que es pot accedir al paquet
@@ -72,10 +84,10 @@ USE scorm2004BETA;
 	`item_id`	int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`item_id_text`	VARCHAR(20),			#L'identificador en text de l'item... eliminable?
 	`leaf`		BIT(1) default 1 NOT NULL, 	#Ens indicarà si l'item és una "fulla" (sco o item) o no. 
-	`is_visible`		BIT(1) default 1,	#'Y' == 1 ,N == 0 #Mostra, o no, l'organització.
+	`is_visible`	BIT(1) default 1,	#'Y' == 1 ,N == 0 #Mostra, o no, l'organització.
 	`title`		VARCHAR(200),			#Títol de l'item. 
 	`countComments`	TINYINT NOT NULL default 0,	#Contador del número de comentaris associats amb l'item. 
-	`parent_item_id`	int(11) UNSIGNED NOT NULL default 0,	#El "pare" d'aquest item. 
+	`father_item_id`	int(11) UNSIGNED NOT NULL default 0,	#El "pare" d'aquest item. 
 	`organization_id`	int(11) UNSIGNED NOT NULL,	#L'organització a la que pertany. 
 	`adlnavPresentation_id`	int(11) UNSIGNED,	#si tenim adlnav: aquí hi haurà l'identificador. 	
 	`adlseqSequencing_id`	int(11) UNSIGNED,	#si tenim seqüenciament aquí tindrem el seu apuntador. 
@@ -94,7 +106,7 @@ USE scorm2004BETA;
 	`completionThreshold`	DECIMAL(5,3),	#Llindar per determinar si un recurs ha estat completat o no.
 	`time_limit_action` enum('EXITMESSAGE','EXITNOMESSAGE','CONTINUEMESSAGE','CONTINUENOMESSAGE') default 'CONTINUENOMESSAGE',
 	`max_time_allowed`	int UNSIGNED,		#Temps màxim acumulat permés per accedir al recurs
-	`RandomizationTiming`	enum('never','once', 'onEachNewAttempt') default 'never'
+	`RandomizationTiming`	enum('never','once', 'onEachNewAttempt') default 'never',
 	`selectCount` int UNSIGNED default 0,
 	PRIMARY KEY (optional_data_item_id)
   ) ENGINE = MyISAM;
@@ -139,10 +151,7 @@ USE scorm2004BETA;
 	`hidePrevious`	BIT(1) default 0,	#si està seleccionat (1 == true) aleshores és visible
 	`hideContinue`	BIT(1) default 0, 	#si està seleccionat (1 == true) aleshores és visible
 	`hideExit`	BIT(1) default 0,	#si està seleccionat (1 == true) aleshores és visible
-	`hideExitAll`	BIT(1) default 0,	#si està seleccionat (1 == true) aleshores és visible
 	`hideAbandon`	BIT(1) default 0,	#si està seleccionat (1 == true) aleshores és visible
-	`hideAbandonAll`	BIT(1) default 0,	#si està seleccionat (1 == true) aleshores és visible
-	`hideSuspendAll`	BIT(1) default 0,	#si està seleccionat (1 == true) aleshores és visible
 	PRIMARY KEY (adlnavPresentation_id)
   ) ENGINE = MyISAM;
 
@@ -235,12 +244,11 @@ USE scorm2004BETA;
   DROP TABLE IF EXISTS `rollupConsiderations`;
   CREATE TABLE `rollupConsiderations` (
 	`rollupConsiderations_id` int(11) UNSIGNED NOT NULL,
-	`requiredForSatisfied`	enum('always', 'ifAttempted', 'ifNotSkipped', 'ifNotSuspended') default 'always'
-	`requiredForNotSatisfied` enum('always', 'ifAttempted', 'ifNotSkipped', 'ifNotSuspended') default 'always'
-	`requiredForCompleted`	enum('always', 'ifAttempted', 'ifNotSkipped', 'ifNotSuspended') default 'always'
-	`requiredForIncomplete`	enum('always', 'ifAttempted', 'ifNotSkipped', 'ifNotSuspended') default 'always'
+	`requiredForSatisfied`	enum('always', 'ifAttempted', 'ifNotSkipped', 'ifNotSuspended') default 'always',
+	`requiredForNotSatisfied` enum('always', 'ifAttempted', 'ifNotSkipped', 'ifNotSuspended') default 'always',
+	`requiredForCompleted`	enum('always', 'ifAttempted', 'ifNotSkipped', 'ifNotSuspended') default 'always',
+	`requiredForIncomplete`	enum('always', 'ifAttempted', 'ifNotSkipped', 'ifNotSuspended') default 'always',
 	`measureSatisfactionIfActive` Bit(1) default 1,
-
 	PRIMARY KEY(rollupConsiderations_id)
   ) ENGINE = MyISAM;
 

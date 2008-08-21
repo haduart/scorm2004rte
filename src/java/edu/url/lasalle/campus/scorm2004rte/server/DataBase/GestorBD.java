@@ -864,11 +864,13 @@ public final class GestorBD extends DBConnector implements DataAccess {
 			final String structure, 
 			final Boolean isVisible,
 			final String itemIdText, 
-			final String title) {
+			final String title,
+			final String dateTimeStart,
+			final String dateTimeEnd) {
 		int returnValue = 0;
 		
 		String sqlUpdateScormStructure =
-			"CALL insertOrganizations( ? , ? , ? , ? , ? )";
+			"CALL insertOrganizations( ? , ? , ? , ? , ? , ? , ? )";
 						    		
 		try {
 			PreparedStatement pstmt =
@@ -880,7 +882,9 @@ public final class GestorBD extends DBConnector implements DataAccess {
 			pstmt.setBoolean(3, isVisible);
 			pstmt.setString(4, itemIdText);
 			pstmt.setString(5, title);	
-									
+			pstmt.setString(6, dateTimeStart);
+			pstmt.setString(7, dateTimeEnd);
+			
 			pstmt.executeUpdate();
 			
 			// get the generated key for the id

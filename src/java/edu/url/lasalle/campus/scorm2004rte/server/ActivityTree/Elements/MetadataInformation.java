@@ -129,6 +129,19 @@ public class MetadataInformation {
 	 *     Si es "yes" aleshores agafem la descripció.      
 	 */
 	public String copyright = "Sense Copyright";
-
+	
+	/**
+	 * Aquest valor s'emmagatzemarà a la taula organizations de la BD.
+	 * No forma part de l'especificació. 
+	 * String Type.
+	 */
+	public String dateTimeStart = "";
+	/**
+	 * Aquest valor s'emmagatzemarà a la taula organizations de la BD.
+	 * No forma part de l'especificació. 
+	 * String Type.
+	 */
+	public String dateTimeEnd = "";
+	
 }
 
