@@ -162,9 +162,9 @@ public final class CourseAdministrator {
 			
 			yourCourseManager =
 				courseManagersMap.get(
-						new HashKey(dataAccessID, organizationID));
-			
+						new HashKey(dataAccessID, organizationID));			
 		}
+		
 		/**
 		 * Si no el trobem l'haurem de buscar,crear i afegir-lo 
 		 * al llistat de courseManagersMap per saber que el tenim en 

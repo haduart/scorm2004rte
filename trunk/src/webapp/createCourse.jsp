@@ -447,6 +447,7 @@
 											<option value="no"><c:out value='${translator["createcourse.content.form.no"]}' /></option>
 										</select>
 									</div>
+									<input type="hidden" name="path" value="<%= utils.getCoursePath() %>" /> 
 								</div>
 							</fieldset>						
 					</c:when>
