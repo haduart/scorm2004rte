@@ -1,5 +1,7 @@
-<%
+<%--
 /***********************************************************************
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ * 
  * Copyright (c) 2007 Enginyeria La Salle. Universitat Ramon Llull.
  * This file is part of SCORM2004RTE.
  *
@@ -13,7 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details, currently published
  * at http://www.gnu.org/copyleft/gpl.html or in the gpl.txt in
- * the root folder of this distribution.
+ * the license folder of this distribution.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
@@ -24,19 +26,22 @@
  * You may contact the author at msegarra@salle.url.edu
  * And the copyright holder at: semipresencial@salle.url.edu
  ***********************************************************************/
- %>
-<? xml version="1.0" encoding="ISO-8859-1" ?>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" %>
+ --%>
+ 
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <jsp:useBean id="init" class="edu.url.lasalle.campus.scorm2004rte.system.Initialization" scope="page" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<% edu.url.lasalle.campus.scorm2004rte.server.DataBase.GestorBD nouGestor = edu.url.lasalle.campus.scorm2004rte.server.DataBase.GestorBD.getInstance(); %>
-<% edu.url.lasalle.campus.scorm2004rte.system.DataAccessRepository.getInstance().registerDataAccess(nouGestor.getDataAccessID(), nouGestor); %>
+<%
+edu.url.lasalle.campus.scorm2004rte.server.DataBase.GestorBD nouGestor = edu.url.lasalle.campus.scorm2004rte.server.DataBase.GestorBD.getInstance();
+%>
+<%
+edu.url.lasalle.campus.scorm2004rte.system.DataAccessRepository.getInstance().registerDataAccess(nouGestor.getDataAccessID(), nouGestor);
+%>
 <c:choose>
 	<c:when test='<%= init.isAuthenticated() %>'>
 		<jsp:useBean id="utilities" class="edu.url.lasalle.campus.scorm2004rte.system.JSPUtils" scope="page" />
-		<% init.setTranslations("viewcourse.title,viewcourse.noscript,viewcourse.accessibility.bar.title,viewcourse.accessibility.bar.link1,viewcourse.accessibility.bar.link2,viewcourse.accessibility.bar.link3,viewcourse.accessibility.bar.link4,viewcourse.header.logo,viewcourse.accessibility.navigationmenu,viewcourse.navigationmenu.link1,viewcourse.navigationmenu.link3,viewcourse.accessibility.toolmenu,viewcourse.toolmenu.title,viewcourse.toolmenu.link1,viewcourse.toolmenu.link2,viewcourse.toolmenu.link3,viewcourse.toolmenu.link4,viewcourse.toolmenu.link5,viewcourse.accessibility.content,viewcourse.content.title,viewcourse.content.help,viewcourse.content.table.title,viewcourse.content.table.description,viewcourse.content.table.requirement,viewcourse.content.table.author,viewcourse.content.table.learningtime,viewcourse.content.table.organizations,viewcourse.content.table.summary,viewcourse.content.completed,viewcourse.accessibility.button,viewcourse.content.button,viewcourse.footer.message,error.userNotHaveAccessPermission,error.userNotAuthenticated"); %>
+		<% init.setTranslations("viewcourse.title,viewcourse.noscript,viewcourse.accessibility.bar.title,viewcourse.accessibility.bar.link1,viewcourse.accessibility.bar.link2,viewcourse.accessibility.bar.link3,viewcourse.accessibility.bar.link4,viewcourse.header.logo,viewcourse.accessibility.navigationmenu,viewcourse.navigationmenu.link1,viewcourse.navigationmenu.link2,viewcourse.navigationmenu.link3,viewcourse.accessibility.toolmenu,viewcourse.toolmenu.title,viewcourse.toolmenu.link1,viewcourse.toolmenu.link2,viewcourse.toolmenu.link3,viewcourse.toolmenu.link4,viewcourse.toolmenu.link5,viewcourse.accessibility.content,viewcourse.content.title,viewcourse.content.help,viewcourse.content.table.title,viewcourse.content.table.description,viewcourse.content.table.requirement,viewcourse.content.table.author,viewcourse.content.table.learningtime,viewcourse.content.table.organizations,viewcourse.content.table.summary,viewcourse.content.completed,viewcourse.accessibility.button,viewcourse.content.button,viewcourse.footer.message,error.userNotHaveAccessPermission,error.userNotAuthenticated"); %>
 		<c:set var="translator" value="<%= init.getTranslations() %>" />
 		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 		<head>
@@ -44,11 +49,12 @@
 			<link rel="stylesheet" type="text/css" media="all" href="<c:out value="${init.stylesPath}" />scormrte_styles.css" />
 			<link rel="icon" href="favicon.ico" type="image/x-icon" />
 			<title><c:out value='${translator["viewcourse.title"]}' /></title>
-			<script type="text/javascript" language="javascript" src="<c:out value="${init.scriptsPath}" />scormrte_scripts.js"></script>
+			<script type="text/javascript" language="javascript" src="<c:out value="${init.scriptsPath}" />scormrte_utils.js"></script>
 		</head>
 		<body>
 			<c:choose>
 				<c:when test='<%= init.hasAccessPermission() %>'>
+					<%-- Missatge a mostrar si el navegador del client té el javascript desactivat --%>
 					<noscript>
 						<p><c:out value='${translator["viewcourse.noscript"]}' /></p>	
 					</noscript>	
@@ -75,7 +81,7 @@
 									<a href="welcome.jsp" title="<c:out value='${translator["viewcourse.navigationmenu.link1"]}' />" accesskey="1"><c:out value='${translator["viewcourse.navigationmenu.link1"]}' /></a>
 								</li>
 								<li class="selected">
-									<a href="#"><%= utilities.getCourseTitle(request.getParameter("course")) %></a>
+									<a href="#"><c:out value='${translator["viewcourse.navigationmenu.link2"]}' /> <%= utilities.getCourseTitle(request.getParameter("course")) %></a>
 								</li>
 							</ul>
 						</div>
@@ -95,7 +101,7 @@
 											<a href="welcome.jsp" title="<c:out value='${translator["viewcourse.toolmenu.link4"]}' />" accesskey="w"><c:out value='${translator["viewcourse.toolmenu.link4"]}' /></a>							
 										</li>
 										<li>
-											<a href="#" title="<c:out value='${translator["viewcourse.toolmenu.link5"]}' />" accesskey="a" target="_blank" onclick="openWindow('help.jsp?page=viewcourse', 'Help', '<c:out value="${init.helpProperties} }" />'); return false"><c:out value='${translator["viewcourse.toolmenu.link5"]}' /></a>							
+											<a href="#" title="<c:out value='${translator["viewcourse.toolmenu.link5"]}' />" accesskey="a" target="_blank" onclick="openWindow('help.jsp?page=viewcourse', 'Help', '<c:out value="${init.windowProperties} }" />', '<c:out value="${init.windowWidth} }" />', '<c:out value="${init.windowHeight} }" />'); return false"><c:out value='${translator["viewcourse.toolmenu.link5"]}' /></a>							
 										</li>
 									</ul>
 								</div>
@@ -108,7 +114,7 @@
 										<h2><%= utilities.getCourseTitle(request.getParameter("course")) %></h2>
 									</div>
 									<div class="help">
-										<a href="#" title="<c:out value='${translator["viewcourse.content.help"]}' />" accesskey="h" target="_blank" onclick="openWindow('help.jsp?page=tracking<c:out value="${param.level}" />', 'Help', '<c:out value="${init.helpProperties} }" />'); return false">
+										<a href="#" title="<c:out value='${translator["viewcourse.content.help"]}' />" accesskey="h" target="_blank" onclick="openWindow('help.jsp?page=viewcourse', 'Help', '<c:out value="${init.windowProperties} }" />', '<c:out value="${init.windowWidth} }" />', '<c:out value="${init.windowHeight} }" />'); return false">
 											<img src="<c:out value="${init.imagesPath}" />help.gif" alt="<c:out value='${translator["viewcourse.content.help"]}' />" />
 										</a>
 									</div>
@@ -136,16 +142,12 @@
 														<td><%= utilities.getCourseAuthor(request.getParameter("course")) %></td>
 													</tr>
 													<tr>
-														<th><c:out value='${translator["viewcourse.content.table.learningtime"]}' /></th>
-														<td><%= utilities.getCourseTypicalLearningTime(request.getParameter("course")) %></td>
-													</tr>
-													<tr>
 														<th><c:out value='${translator["viewcourse.content.table.organizations"]}' /></th>
 														<td><c:set var="list" value="<%= utilities.getOrganizationsId(request.getParameter("course")) %>" />
 															<% int i = 0; %>
 															<c:forEach begin="1" end="<%= utilities.getOrganizationsId(request.getParameter("course")).size() %>">
 																<% String orgId = utilities.getOrganizationsId(request.getParameter("course")).get(i).toString(); %>
-																<input name="org" value="<%= orgId %>" type="radio" <% if (i == 0) { out.print("checked='checked'"); } %> /><%= utilities.getOrganizationTitle(orgId) %> - <c:out value='${translator["viewcourse.content.completed"]}' /> <%= utilities.getCompletedPercentUserOrganization(orgId) %>%</label>
+																<input name="org" value="<%= orgId %>" type="radio" <% if (i == 0) { out.print("checked='checked'"); } %> /><%= utilities.getOrganizationTitle(orgId) %> - <c:out value='${translator["viewcourse.content.completed"]}' /> <%= utilities.getCompletedPercentUserOrganization(orgId) %>%
 																<% i++; %>
 															</c:forEach>
 														</td>
