@@ -1,5 +1,7 @@
-<%
+<%--
 /***********************************************************************
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ * 
  * Copyright (c) 2007 Enginyeria La Salle. Universitat Ramon Llull.
  * This file is part of SCORM2004RTE.
  *
@@ -13,7 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details, currently published
  * at http://www.gnu.org/copyleft/gpl.html or in the gpl.txt in
- * the root folder of this distribution.
+ * the license folder of this distribution.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
@@ -24,10 +26,9 @@
  * You may contact the author at msegarra@salle.url.edu
  * And the copyright holder at: semipresencial@salle.url.edu
  ***********************************************************************/
- %>
+ --%>
 <? xml version="1.0" encoding="ISO-8859-1" ?>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <jsp:useBean id="init" class="edu.url.lasalle.campus.scorm2004rte.system.Initialization" scope="page" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -37,7 +38,7 @@
  	    <jsp:useBean id="tableStudent" class="edu.url.lasalle.campus.scorm2004rte.server.jsp.TrackingStudent" scope="page" />
   	    <jsp:useBean id="tableObjective" class="edu.url.lasalle.campus.scorm2004rte.server.jsp.TrackingObjective" scope="page" />
 		<jsp:useBean id="utilities" class="edu.url.lasalle.campus.scorm2004rte.system.JSPUtils" scope="page" />
-		<% init.setTranslations("tracking.title,tracking.noscript,tracking.accessibility.bar.title,tracking.accessibility.bar.link1,tracking.accessibility.bar.link2,tracking.accessibility.bar.link3,tracking.accessibility.bar.link4,tracking.header.logo,tracking.accessibility.navigationmenu,tracking.navigationmenu.link1,tracking.navigationmenu.link3,tracking.navigationmenu.link4,tracking.navigationmenu.link5,tracking.accessibility.toolmenu,tracking.toolmenu.title,tracking.toolmenu.link1,tracking.toolmenu.link2,tracking.toolmenu.link3,tracking.toolmenu.link4,tracking.toolmenu.link5,tracking.accessibility.content,tracking.content.title1,tracking.content.title2,tracking.content.help,tracking.accessibility.button,tracking.content.button,tracking.footer.message,tracking.content.table1.summary,tracking.content.table1.header1,tracking.content.table1.header2,tracking.content.table1.header3,tracking.content.table1.header4,tracking.content.table1.header5,tracking.content.table1.nvisits,tracking.content.table1.completed,tracking.content.table2.summary,tracking.content.table2.header1,tracking.content.table2.header2,tracking.content.table2.header3,tracking.content.table2.header4,tracking.content.table2.header5,tracking.content.table2.header6,tracking.content.table2.header7,tracking.content.table2.header8,tracking.content.table2.header9,tracking.content.table2.unknown,tracking.content.table2.completed,tracking.content.table2.incomplete,tracking.content.table2.attempted,tracking.content.table2.passed,tracking.content.table2.failed,tracking.content.table3.summary,tracking.content.table3.header1,tracking.content.table3.header2,tracking.content.table3.header3,tracking.content.table3.header4,tracking.content.table3.header5,error.userNotHaveAdministrationPermission,error.userNotAuthenticated"); %>
+		<% init.setTranslations("tracking.title,tracking.noscript,tracking.accessibility.bar.title,tracking.accessibility.bar.link1,tracking.accessibility.bar.link2,tracking.accessibility.bar.link3,tracking.accessibility.bar.link4,tracking.header.logo,tracking.accessibility.navigationmenu,tracking.navigationmenu.link1,tracking.navigationmenu.link2,tracking.navigationmenu.link3,tracking.navigationmenu.link4,tracking.navigationmenu.link5,tracking.accessibility.toolmenu,tracking.toolmenu.title,tracking.toolmenu.link1,tracking.toolmenu.link2,tracking.toolmenu.link3,tracking.toolmenu.link4,tracking.toolmenu.link5,tracking.accessibility.content,tracking.content.title1,tracking.content.title2,tracking.content.help,tracking.accessibility.button,tracking.content.button,tracking.footer.message,tracking.content.table1.summary,tracking.content.table1.header1,tracking.content.table1.header2,tracking.content.table1.header3,tracking.content.table1.header4,tracking.content.table1.header5,tracking.content.table1.nvisits,tracking.content.table1.completed,tracking.content.table2.summary,tracking.content.table2.header1,tracking.content.table2.header2,tracking.content.table2.header3,tracking.content.table2.header4,tracking.content.table2.header5,tracking.content.table2.header6,tracking.content.table2.header7,tracking.content.table2.header8,tracking.content.table2.header9,tracking.content.table2.unknown,tracking.content.table2.completed,tracking.content.table2.incomplete,tracking.content.table2.attempted,tracking.content.table2.passed,tracking.content.table2.failed,tracking.content.table3.summary,tracking.content.table3.header1,tracking.content.table3.header2,tracking.content.table3.header3,tracking.content.table3.header4,tracking.content.table3.header5,error.userNotHaveAdministrationPermission,error.userNotAuthenticated"); %>
 		<c:set var="translator" value="<%= init.getTranslations() %>" />
 		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 		<head>
@@ -77,7 +78,7 @@
 								</li>
 								<li>
 									<c:set var="courseTitle" value='<%= utilities.getCourseTitle(request.getParameter("course")) %>' />
-									<a href="<c:out value='viewCourse.jsp?course=${param.course}' />" title="<c:out value='${courseTitle}' />" accesskey="2"><c:out value='${courseTitle}' /></a>
+									<a href="<c:out value='viewCourse.jsp?course=${param.course}' />" title="<c:out value='${courseTitle}' />" accesskey="2"><c:out value='${translator["tracking.navigationmenu.link2"]}' /> <c:out value='${courseTitle}' /></a>
 								</li>
 								<c:choose>
 									<c:when test="${param.level eq 1}">
@@ -127,7 +128,7 @@
 											<a href="welcome.jsp" title="<c:out value='${translator["tracking.toolmenu.link4"]}' />" accesskey="w"><c:out value='${translator["tracking.toolmenu.link4"]}' /></a>							
 										</li> --%>
 										<li>
-											<a href="#" title="<c:out value='${translator["tracking.toolmenu.link5"]}' />" accesskey="a" target="_blank" onclick="openWindow('help.jsp?page=tracking<c:out value="${param.level}" />', 'Help', '<c:out value="${init.helpProperties} }" />'); return false"><c:out value='${translator["tracking.toolmenu.link5"]}' /></a>							
+											<a href="#" title="<c:out value='${translator["tracking.toolmenu.link5"]}' />" accesskey="a" target="_blank" onclick="openWindow('help.jsp?page=tracking', 'Help', '<c:out value="${init.windowProperties} }" />', '<c:out value="${init.windowWidth} }" />', '<c:out value="${init.windowHeight} }" />'); return false"><c:out value='${translator["tracking.toolmenu.link5"]}' /></a>							
 										</li>
 									</ul>
 								</div>
@@ -143,7 +144,7 @@
 										</c:if>
 									</div>
 									<div class="help">
-										<a href="#" title="<c:out value='${translator["tracking.content.help"]}' />" accesskey="h" target="_blank" onclick="openWindow('help.jsp?page=tracking<c:out value="${param.level}" />', 'Help', '<c:out value="${init.helpProperties} }" />'); return false">
+										<a href="#" title="<c:out value='${translator["tracking.content.help"]}' />" accesskey="h" target="_blank" onclick="openWindow('help.jsp?page=tracking', 'Help', '<c:out value="${init.windowProperties} }" />', '<c:out value="${init.windowWidth} }" />', '<c:out value="${init.windowHeight} }" />'); return false">
 											<img src="<c:out value="${init.imagesPath}" />help.gif" alt="<c:out value='${translator["tracking.content.help"]}' />" />
 										</a>
 									</div>
