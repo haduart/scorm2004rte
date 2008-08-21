@@ -285,7 +285,7 @@ edu.url.lasalle.campus.scorm2004rte.system.DataAccessRepository.getInstance().re
 										<a href="#" title="<c:out value='${translator["viewcontent.content.button.increase"]}' />" accesskey="i" onclick="increaseText(); return false;">
 											<img src="<c:out value="${init.imagesPath}" />enlargeText.gif" alt="<c:out value='${translator["viewcontent.content.button.increase"]}' />" />
 										</a> |
-										<a href="#" title="<c:out value='${translator["viewcontent.content.help"]}' />" accesskey="h" target="_blank" onclick="openWindow('help.jsp?page=viewcontents', 'Help', '<c:out value="${init.helpProperties} }" />'); return false">
+										<a href="#" title="<c:out value='${translator["viewcontent.content.help"]}' />" accesskey="h" target="_blank" onclick="openWindow('help.jsp?page=viewcontents', 'Help', '<c:out value="${init.windowProperties} }" />', '<c:out value="${init.windowWidth} }" />', '<c:out value="${init.windowHeight} }" />'); return false">
 											<img src="<c:out value="${init.imagesPath}" />help.gif" alt="<c:out value='${translator["viewcontent.content.help"]}' />" />
 										</a> 
 									</div>
