@@ -69,9 +69,8 @@ public class JSPUtils {
      * formulari amb contingut binari de "createCourse.jsp".
      * @return String amb l'identificador del curs.
      */
-    public final String importCourse(final HttpServletRequest request) {
-        String courseId = "-1";
-        
+    public final boolean importCourse(final HttpServletRequest request) {
+                
         // puja el fitxer del curs SCORM al servidor i el descomprimeix
         // si tot és correcte, el curs s'emmagatzema a la BDD
         if (fileUpload(request)) {
@@ -92,7 +91,7 @@ public class JSPUtils {
              ****/
         	        	
         	DOMParser nouParser = new DOMParser(
-        			coursePath + "\\imsmanifest.xml");
+        			coursePath + "imsmanifest.xml");
         	
         	metadata = nouParser.getMetadataInformation();
         	
@@ -101,9 +100,12 @@ public class JSPUtils {
         			coursePath,
     				"JUnitTestDefaultName" + (new Random()).nextInt(1000));
     		*/
+        	
+        	return nouParser.getIsParsingCorrect();
         }
         System.out.println("COURSE PATH: " + coursePath);
-        return courseId;
+        
+        return false;
     }
     
     /**
@@ -115,6 +117,19 @@ public class JSPUtils {
      */
     public final boolean createCourse(final HttpServletRequest request) {
         
+        System.out.println("Title: " + request.getParameter("title"));
+        System.out.println("Description: " + request.getParameter("description"));
+        System.out.println("Requirements: " + request.getParameter("requirements"));
+        
+        System.out.println("Inici: " + request.getParameter("timeStartDay") + "/" 
+                + request.getParameter("timeStartMonth") + "/" + request.getParameter("timeStartYear")
+                + " - " + request.getParameter("timeStartHour") + ":" + request.getParameter("timeStartMinute"));
+        
+        System.out.println("Fi: " + request.getParameter("timeFinishDay") + "/" 
+                + request.getParameter("timeFinishMonth") + "/" + request.getParameter("timeFinishYear")
+                + " - " + request.getParameter("timeFinishHour") + ":" + request.getParameter("timeFinishMinute"));
+        
+        System.out.println("Tracking???: " + request.getParameter("tracking"));
         
         return true;
     }
